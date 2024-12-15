@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { FileText, Search, Filter, Upload, FolderPlus, BarChart2, X } from 'lucide-react';
+import { FileText, Search, Filter, Upload, FolderPlus, BarChart2, X, Mic, Mail, MessageSquare, Scale, FileSignature } from 'lucide-react';
 import Link from 'next/link';
 import { useDocumentProcessor } from '@/hooks/useDocumentProcessor';
 import { Document, ProcessedDocument } from '@/types/document';
@@ -31,6 +31,35 @@ type RealtimeUpdatePayload = {
 
 type RealtimePayload = RealtimePostgresChangesPayload<RealtimeUpdatePayload>;
 
+const DOCUMENT_TYPES = {
+  audio_transcript: {
+    icon: Mic,
+    acceptedFiles: '.mp3,.wav,.m4a',
+    color: 'text-purple-600'
+  },
+  email: {
+    icon: Mail,
+    acceptedFiles: '.eml,.msg',
+    color: 'text-blue-600'
+  },
+  text_message: {
+    icon: MessageSquare,
+    acceptedFiles: '.txt,.csv',
+    color: 'text-green-600'
+  },
+  court_document: {
+    icon: Scale,
+    acceptedFiles: '.pdf,.doc,.docx',
+    color: 'text-red-600'
+  },
+  legal_filing: {
+    icon: FileSignature,
+    acceptedFiles: '.pdf,.doc,.docx',
+    color: 'text-orange-600'
+  },
+  // ... add other document types as needed
+} as const;
+
 export default function DocumentsPage() {
   const [documents, setDocuments] = useState<DocumentItem[]>([]);
   const [showBatchUpload, setShowBatchUpload] = useState(false);
@@ -38,6 +67,7 @@ export default function DocumentsPage() {
   const [showPreview, setShowPreview] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [uploadType, setUploadType] = useState<keyof typeof DOCUMENT_TYPES>('audio_transcript');
 
   const {
     processDocument,
@@ -89,6 +119,16 @@ export default function DocumentsPage() {
     };
   }, []);
 
+  // Add connection validation on mount
+  useEffect(() => {
+    validateSupabaseConnection().then(({ isValid, error }) => {
+      console.log('Supabase connection validation:', { isValid, error });
+      if (!isValid) {
+        setError(`Database connection error: ${error}`);
+      }
+    });
+  }, []);
+
   // Load documents
   useEffect(() => {
     async function loadDocuments() {
@@ -96,32 +136,49 @@ export default function DocumentsPage() {
         setIsLoading(true);
         setError(null);
 
+        console.log('Fetching documents...', {
+          url: process.env.NEXT_PUBLIC_SUPABASE_URL,
+          hasKey: !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+        });
+
         const { data, error: fetchError } = await supabase
           .from('documents')
           .select('*')
           .order('created_at', { ascending: false });
 
         if (fetchError) {
-          throw fetchError;
+          console.error('Supabase error:', {
+            error: fetchError,
+            message: fetchError.message,
+            details: fetchError.details,
+            hint: fetchError.hint
+          });
+          throw new Error(fetchError.message);
         }
 
+        console.log('Documents data:', data);
+
         if (data) {
-          setDocuments(
-            data.map((doc: DocumentRow) => ({
-              id: doc.id,
-              title: doc.title,
-              modifiedAt: new Date(doc.updated_at),
-              size: doc.size || '0 B',
-              caseNumber: doc.case_number || 'N/A',
-              content: doc.content,
-              status: doc.status,
-              type: doc.type
-            }))
-          );
+          const mappedDocs = data.map((doc: DocumentRow) => ({
+            id: doc.id,
+            title: doc.title,
+            modifiedAt: new Date(doc.updated_at),
+            size: doc.size || '0 B',
+            caseNumber: doc.case_number || 'N/A',
+            content: doc.content,
+            status: doc.status,
+            type: doc.type
+          }));
+          console.log('Mapped documents:', mappedDocs);
+          setDocuments(mappedDocs);
         }
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Failed to load documents';
-        console.error('Error loading documents:', err);
+        console.error('Error loading documents:', {
+          error: err,
+          message: errorMessage,
+          stack: err instanceof Error ? err.stack : undefined
+        });
         setError(errorMessage);
       } finally {
         setIsLoading(false);
@@ -274,6 +331,36 @@ export default function DocumentsPage() {
     );
   };
 
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDrop = async (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const files = Array.from(e.dataTransfer.files);
+    handleFiles(files);
+  };
+
+  const handleFiles = async (files: File[]) => {
+    // Filter files based on uploadType
+    const validFiles = files.filter(file => {
+      const fileExt = `.${file.name.split('.').pop()?.toLowerCase()}`;
+      return DOCUMENT_TYPES[uploadType].acceptedFiles.includes(fileExt);
+    });
+
+    if (validFiles.length === 0) {
+      setError('No valid files selected');
+      return;
+    }
+
+    setShowBatchUpload(true);
+    // Pass files to BatchUploadModal
+    // You'll need to modify the BatchUploadModal to accept initialFiles
+  };
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -301,6 +388,50 @@ export default function DocumentsPage() {
             <Upload className="w-5 h-5 mr-2" />
             Upload Documents
           </button>
+        </div>
+      </div>
+
+      {/* Add document type selector */}
+      <div className="flex gap-2 mb-4">
+        {Object.entries(DOCUMENT_TYPES).map(([type, config]) => (
+          <button
+            key={type}
+            onClick={() => setUploadType(type as keyof typeof DOCUMENT_TYPES)}
+            className={`flex items-center px-3 py-2 rounded-lg border ${
+              uploadType === type 
+                ? 'border-blue-600 bg-blue-50 text-blue-600' 
+                : 'border-gray-200 hover:bg-gray-50'
+            }`}
+          >
+            <config.icon className={`w-4 h-4 mr-2 ${config.color}`} />
+            {type.split('_').map(word => 
+              word.charAt(0).toUpperCase() + word.slice(1)
+            ).join(' ')}
+          </button>
+        ))}
+      </div>
+
+      {/* Add drag and drop zone */}
+      <div
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+        className="border-2 border-dashed border-gray-300 rounded-lg p-12 text-center hover:border-blue-500 transition-colors"
+      >
+        <div className="flex flex-col items-center">
+          <Upload className="w-12 h-12 text-gray-400 mb-4" />
+          <p className="text-xl font-medium text-gray-900 dark:text-gray-100">
+            Drag and drop your {uploadType.split('_').join(' ')} files
+          </p>
+          <p className="text-sm text-gray-500 mt-2">
+            or click to browse your computer
+          </p>
+          <input
+            type="file"
+            multiple
+            accept={DOCUMENT_TYPES[uploadType].acceptedFiles}
+            onChange={(e) => handleFiles(Array.from(e.target.files || []))}
+            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+          />
         </div>
       </div>
 

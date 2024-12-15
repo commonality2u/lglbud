@@ -1,0 +1,32 @@
+name: legal-buddy
+services:
+  db:
+    image: postgres:15
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: "q-@#u3h$dP!rF82"
+      POSTGRES_DB: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  supabase:
+    image: supabase/supabase-dev
+    depends_on:
+      - db
+    ports:
+      - "54321:54321"
+      - "54322:54322"
+      - "54323:54323"
+    environment:
+      POSTGRES_PASSWORD: "q-@#u3h$dP!rF82"
+      POSTGRES_HOST: db
+      POSTGRES_DB: postgres
+      SUPABASE_URL: "https://hdlednawpnafjdpvhojn.supabase.co"
+      SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhkbGVkbmF3cG5hZmpkcHZob2puIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDIxNjc2MDAsImV4cCI6MjAxNzc0MzYwMH0.q-@#u3h$dP!rF82"
+      SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY}
+    volumes:
+      - ./supabase/migrations:/supabase/migrations
+
+volumes:
+  db-data:
