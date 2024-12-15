@@ -155,8 +155,13 @@ def get_code_files(root_dir):
         if file_path in processed_files:
             continue
             
-        # Skip ignored directories
-        if any(ignored in path.parts for ignored in IGNORED_DIRS):
+        # Improved directory exclusion check
+        should_skip = False
+        for part in path.parts:
+            if part in IGNORED_DIRS or any(ignored in part for ignored in IGNORED_DIRS):
+                should_skip = True
+                break
+        if should_skip:
             continue
             
         # Only include specified file extensions

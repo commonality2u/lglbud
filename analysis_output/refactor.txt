@@ -1,0 +1,258 @@
+Here's the complete migration plan:
+
+````plaintext
+MIGRATION PLAN FOR LEGAL-BUDDY
+
+1. CREATE NEW DIRECTORY STRUCTURE
+mkdir frontend
+mkdir backend
+
+2. MOVE FRONTEND FILES
+mv src/ frontend/
+mv public/ frontend/
+mv prisma/ frontend/
+mv .env frontend/
+mv next.config.ts frontend/
+mv next-env.d.ts frontend/
+mv package.json frontend/
+mv package-lock.json frontend/
+mv postcss.config.mjs frontend/
+mv tailwind.config.ts frontend/
+mv tsconfig.json frontend/
+
+3. MOVE ANALYSIS TOOLS TO ROOT
+mkdir tools
+mv codebase_analysis.py tools/
+mv generate_todo.py tools/
+mv analysis_output/ tools/
+mv .cursorrules tools/
+
+4. CREATE BACKEND STRUCTURE
+backend/
+├── app/
+│   ├── __init__.py
+│   ├── main.py
+│   ├── api/
+│   │   └── __init__.py
+│   ├── core/
+│   │   ├── __init__.py
+│   │   ├── config.py
+│   │   └── security.py
+│   ├── models/
+│   │   └── __init__.py
+│   └── services/
+│       └── __init__.py
+├── tests/
+│   └── __init__.py
+├── requirements.txt
+└── .env
+
+5. UPDATE CONFIG FILES
+
+a) frontend/package.json
+{
+  "name": "legal-buddy-frontend",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  }
+}
+
+b) frontend/tsconfig.json
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src/**/*"]
+}
+
+c) frontend/next.config.ts
+const config = {
+  // Update API paths for backend
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'http://localhost:8000/api/:path*'
+      }
+    ]
+  }
+}
+
+d) Create new root docker-compose.yml
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:8000
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+
+6. CREATE NEW FILES
+
+a) backend/Dockerfile
+FROM python:3.11
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+b) frontend/Dockerfile
+FROM node:18
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+CMD ["npm", "start"]
+
+7. ENVIRONMENT FILES
+
+a) frontend/.env
+NEXT_PUBLIC_API_URL=http://localhost:8000
+# Move existing frontend-specific vars here
+
+b) backend/.env
+DATABASE_URL=postgresql://...
+# Add backend-specific vars here
+
+8. UPDATE IMPORT PATHS
+- No changes needed for @/* imports in frontend
+- Update any relative imports (../) if they exist
+
+9. FINAL STRUCTURE
+legal-buddy/
+├── frontend/           # All Next.js files
+├── backend/           # New FastAPI backend
+├── tools/            # Analysis tools
+│   ├── codebase_analysis.py
+│   ├── generate_todo.py
+│   └── analysis_output/
+├── docker-compose.yml
+└── README.md
+
+10. MOVE SUPABASE CONFIG
+mv supabase/ backend/supabase/
+
+11. CREATE NEW ROOT package.json
+{
+  "scripts": {
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && uvicorn app.main:app --reload",
+    "install": "concurrently \"cd frontend && npm install\" \"cd backend && pip install -r requirements.txt\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.0.0"
+  }
+}
+
+12. UPDATE .gitignore
+/frontend/node_modules
+/frontend/.next
+/frontend/build
+/backend/__pycache__
+/backend/venv
+.env
+*.pyc
+.DS_Store
+
+13. MOVE SCRIPTS DIRECTORY
+mv scripts/ frontend/scripts/
+
+14. UPDATE PRISMA CONFIG
+Update frontend/prisma/schema.prisma database URL to point to the new backend location
+
+15. ADD BACKEND REQUIREMENTS.txt
+backend/requirements.txt:
+fastapi==0.104.1
+uvicorn==0.24.0
+sqlalchemy==2.0.23
+python-jose==3.3.0
+passlib==1.7.4
+python-multipart==0.0.6
+pydantic==2.5.2
+psycopg2-binary==2.9.9
+python-dotenv==1.0.0
+
+16. CREATE BACKEND INITIAL ROUTES
+backend/app/main.py with basic health check endpoint
+
+17. UPDATE VSCode SETTINGS
+Move .vscode/ to root and update workspace settings for both frontend and backend
+
+18. UPDATE CI/CD CONFIGS
+If you have any GitHub Actions or other CI/CD configs, they need to be updated for the new structure
+
+EXECUTION ORDER:
+1. Create backup branch: git checkout -b restructure-project
+    - Backup and Branch Setup
+   - Create backup of current main: git checkout main && git checkout -b backup-main
+   - Return to main: git checkout main
+   - Create restructure branch: git checkout -b restructure-project
+   # Now we're on restructure-project branch where we'll do all the work
+
+
+2. Initial Setup
+   - Create new directories (frontend, backend, tools)
+   - Move .vscode to root and update settings
+   - Create new root package.json
+   - Create new root docker-compose.yml
+   - Update root .gitignore
+
+3. Frontend Migration
+   - Move all frontend files to frontend/
+   - Move scripts/ to frontend/scripts/
+   - Update frontend/package.json
+   - Update frontend/tsconfig.json
+   - Update frontend/next.config.ts
+   - Create frontend/Dockerfile
+   - Create frontend/.env
+   - Update prisma/schema.prisma database URL
+
+4. Backend Setup
+   - Create backend directory structure
+   - Create backend/requirements.txt
+   - Create backend/Dockerfile
+   - Create backend/.env
+   - Create initial backend/app/main.py
+   - Move supabase/ to backend/supabase/
+
+5. Analysis Tools Migration
+   - Move codebase_analysis.py to tools/
+   - Move generate_todo.py to tools/
+   - Move analysis_output/ to tools/
+   - Move .cursorrules to tools/
+
+6. CI/CD Updates
+   - Update any GitHub Actions workflows
+   - Update any other CI/CD configurations
+
+7. Testing
+   - Test frontend: cd frontend && npm run dev
+   - Test backend: cd backend && uvicorn app.main:app --reload
+   - Test analysis tools: python tools/codebase_analysis.py
+   - Test full stack: npm run dev (from root)
+
+8. Final Verification
+   - Verify all imports work
+   - Verify all environment variables are correctly set
+   - Verify database connections
+   - Test all major features
+   - Run analysis tools to verify project structure
