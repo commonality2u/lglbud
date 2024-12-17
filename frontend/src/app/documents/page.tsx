@@ -1,16 +1,32 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { FileText, Search, Filter, Upload, FolderPlus, BarChart2, X, Mic, Mail, MessageSquare, Scale, FileSignature } from 'lucide-react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import Link from 'next/link';
-import { useDocumentProcessor } from '@/hooks/useDocumentProcessor';
-import { Document, ProcessedDocument } from '@/types/document';
-import { BatchUploadModal } from '@/components/BatchUploadModal';
-import { RealtimePostgresChangesPayload } from '@supabase/supabase-js';
+import { FileText, Upload, BarChart2, X, Mic, Mail, MessageSquare, Scale, FileSignature } from 'lucide-react';
+import type { RealtimePostgresChangesPayload } from '@supabase/supabase-js';
 import type { Database } from '@/types/supabase';
 import { supabase } from '@/lib/supabase';
+import { useDocumentProcessor } from '@/hooks/useDocumentProcessor';
+import type { Document, ProcessedDocument } from '@/types/document';
+import { BatchUploadModal } from '@/components/BatchUploadModal';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import EmailsTab from '@/components/documents/EmailsTab';
+import LegalFilingsTab from '@/components/documents/LegalFilingsTab';
+import AudioTranscriptsTab from '@/components/documents/AudioTranscriptsTab';
+import TextMessagesTab from '@/components/documents/TextMessagesTab';
+import InvoicesTab from '@/components/documents/InvoicesTab';
+import ExtractionPanel from '@/components/documents/ExtractionPanel';
+import DocumentList from '@/components/documents/DocumentList';
+import AudioTranscriptSetDetailView from '@/components/documents/AudioTranscriptSetDetailView';
+import EmailSetDetailView from '@/components/documents/EmailSetDetailView';
+import InvoiceSetDetailView from '@/components/documents/InvoiceSetDetailView';
+import LegalFilingSetDetailView from '@/components/documents/LegalFilingSetDetailView';
+import TextMessageSetDetailView from '@/components/documents/TextMessageSetDetailView';
+import type { ReactElement } from 'react';
 
 type DocumentRow = Database['public']['Tables']['documents']['Row'];
+
+type DocumentType = keyof typeof DOCUMENT_TYPES;
 
 interface DocumentItem {
   id: string;
@@ -18,9 +34,15 @@ interface DocumentItem {
   modifiedAt: Date;
   size: string;
   caseNumber: string;
-  content: string;
+  content: string | null;
   status: DocumentRow['status'];
-  type: string;
+  type: DocumentType;
+  sender?: string;
+  duration?: string;
+  name: string;
+  uploadDate: string;
+  source?: string;
+  tags?: string[];
 }
 
 type RealtimeUpdatePayload = {
@@ -29,7 +51,10 @@ type RealtimeUpdatePayload = {
   [key: string]: any;
 }
 
-type RealtimePayload = RealtimePostgresChangesPayload<RealtimeUpdatePayload>;
+type RealtimePayload = RealtimePostgresChangesPayload<{
+  old: { [key: string]: any };
+  new: RealtimeUpdatePayload;
+}>;
 
 const DOCUMENT_TYPES = {
   audio_transcript: {
@@ -57,23 +82,73 @@ const DOCUMENT_TYPES = {
     acceptedFiles: '.pdf,.doc,.docx',
     color: 'text-orange-600'
   },
-  // ... add other document types as needed
+  invoice: {
+    icon: FileText,
+    acceptedFiles: '.pdf,.doc,.docx',
+    color: 'text-yellow-600'
+  }
 } as const;
 
-export default function DocumentsPage() {
+const DOCUMENT_COLUMNS = {
+  audio_transcript: [
+    { key: 'title', label: 'Title' },
+    { key: 'modifiedAt', label: 'Date Recorded' },
+    { key: 'caseNumber', label: 'Case Number' },
+    { key: 'size', label: 'Duration' },
+    { key: 'status', label: 'Status' },
+    { key: 'actions', label: 'Actions' }
+  ],
+  email: [
+    { key: 'title', label: 'Subject' },
+    { key: 'modifiedAt', label: 'Date Received' },
+    { key: 'caseNumber', label: 'Case Number' },
+    { key: 'sender', label: 'From' },
+    { key: 'status', label: 'Status' },
+    { key: 'actions', label: 'Actions' }
+  ],
+  text_message: [
+    { key: 'title', label: 'Content' },
+    { key: 'modifiedAt', label: 'Date Sent' },
+    { key: 'caseNumber', label: 'Case Number' },
+    { key: 'sender', label: 'From' },
+    { key: 'status', label: 'Status' },
+    { key: 'actions', label: 'Actions' }
+  ],
+  court_document: [
+    { key: 'title', label: 'Document Title' },
+    { key: 'modifiedAt', label: 'Filing Date' },
+    { key: 'caseNumber', label: 'Case Number' },
+    { key: 'size', label: 'Size' },
+    { key: 'status', label: 'Status' },
+    { key: 'actions', label: 'Actions' }
+  ],
+  legal_filing: [
+    { key: 'title', label: 'Filing Title' },
+    { key: 'modifiedAt', label: 'Filing Date' },
+    { key: 'caseNumber', label: 'Case Number' },
+    { key: 'size', label: 'Size' },
+    { key: 'status', label: 'Status' },
+    { key: 'actions', label: 'Actions' }
+  ],
+} as const;
+
+export default function DocumentsPage(): ReactElement {
   const [documents, setDocuments] = useState<DocumentItem[]>([]);
-  const [showBatchUpload, setShowBatchUpload] = useState(false);
+  const [showUploadModal, setShowUploadModal] = useState(false);
   const [selectedDocument, setSelectedDocument] = useState<DocumentItem | null>(null);
   const [showPreview, setShowPreview] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<keyof typeof DOCUMENT_TYPES>('audio_transcript');
   const [uploadType, setUploadType] = useState<keyof typeof DOCUMENT_TYPES>('audio_transcript');
+  const [selectedDocumentId, setSelectedDocumentId] = useState<string | null>(null);
+  const [showDetailView, setShowDetailView] = useState(false);
+  const [selectedText, setSelectedText] = useState('');
 
   const {
     processDocument,
     isProcessing,
     currentDocument,
-    error: processingError,
     clearProcessedDocument
   } = useDocumentProcessor({
     onProcessingComplete: (result) => {
@@ -85,11 +160,109 @@ export default function DocumentsPage() {
     }
   });
 
-  // Subscribe to document status updates
+  // Memoize loadDocuments callback
+  const loadDocuments = useCallback(async (type?: string): Promise<void> => {
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      let query = supabase
+        .from('documents')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (type) {
+        query = query.eq('type', type);
+      }
+
+      const { data, error: fetchError } = await query;
+
+      if (fetchError) throw fetchError;
+
+      if (data) {
+        const mappedDocs = data.map((doc: DocumentRow) => ({
+          id: doc.id,
+          title: doc.title,
+          name: doc.title,
+          modifiedAt: new Date(doc.updated_at),
+          uploadDate: new Date(doc.updated_at).toLocaleDateString(),
+          size: doc.size || '0 B',
+          caseNumber: doc.case_number || 'N/A',
+          content: doc.content || '',
+          status: doc.status,
+          type: doc.type as DocumentType,
+          source: 'System Upload',
+          tags: []
+        }));
+        setDocuments(mappedDocs);
+      }
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to load documents';
+      console.error('Error loading documents:', err);
+      setError(errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  // Memoize filtered documents
+  const filteredDocuments = useMemo(() => 
+    documents.filter(doc => doc.type === activeTab),
+    [documents, activeTab]
+  );
+
+  // Memoize handlers
+  const handleTabChange = useCallback((type: keyof typeof DOCUMENT_TYPES) => {
+    setActiveTab(type);
+    setUploadType(type);
+  }, []);
+
+  const handleUploadComplete = useCallback(async () => {
+    setShowUploadModal(false);
+    await loadDocuments(activeTab);
+  }, [activeTab, loadDocuments]);
+
+  const handleRowClick = useCallback((id: string) => {
+    setSelectedDocumentId(id);
+    setShowDetailView(true);
+  }, []);
+
+  const handleBackFromDetail = useCallback(() => {
+    setSelectedDocumentId(null);
+    setShowDetailView(false);
+  }, []);
+
+  const handleEditTags = useCallback((id: string) => {
+    // TODO: Implement tag editing functionality
+    console.log('Edit tags for document:', id);
+  }, []);
+
+  const handleDelete = useCallback(async (id: string) => {
+    try {
+      const { error } = await supabase
+        .from('documents')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+
+      setDocuments(prev => prev.filter(doc => doc.id !== id));
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to delete document';
+      setError(errorMessage);
+    }
+  }, []);
+
+  // Initial load
+  useEffect(() => {
+    void loadDocuments(activeTab);
+  }, [activeTab, loadDocuments]);
+
+  // Subscribe to document updates
   useEffect(() => {
     const channel = supabase
       .channel('document-updates')
-      .on(
+      .on<RealtimeUpdatePayload>(
         'postgres_changes',
         {
           event: 'UPDATE',
@@ -97,15 +270,12 @@ export default function DocumentsPage() {
           table: 'documents'
         },
         (payload: RealtimePayload) => {
-          const newData = payload.new as RealtimeUpdatePayload;
-          if (newData && newData.id && newData.status) {
+          const newData = payload.new;
+          if (newData?.id && newData?.status) {
             setDocuments(prev =>
               prev.map(doc =>
                 doc.id === newData.id
-                  ? { 
-                      ...doc, 
-                      status: newData.status
-                    }
+                  ? { ...doc, status: newData.status }
                   : doc
               )
             );
@@ -115,101 +285,26 @@ export default function DocumentsPage() {
       .subscribe();
 
     return () => {
-      supabase.removeChannel(channel);
+      void supabase.removeChannel(channel);
     };
   }, []);
 
-  // Add connection validation on mount
-  useEffect(() => {
-    validateSupabaseConnection().then(({ isValid, error }) => {
-      console.log('Supabase connection validation:', { isValid, error });
-      if (!isValid) {
-        setError(`Database connection error: ${error}`);
-      }
-    });
-  }, []);
-
-  // Load documents
-  useEffect(() => {
-    async function loadDocuments() {
-      try {
-        setIsLoading(true);
-        setError(null);
-
-        console.log('Fetching documents...', {
-          url: process.env.NEXT_PUBLIC_SUPABASE_URL,
-          hasKey: !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-        });
-
-        const { data, error: fetchError } = await supabase
-          .from('documents')
-          .select('*')
-          .order('created_at', { ascending: false });
-
-        if (fetchError) {
-          console.error('Supabase error:', {
-            error: fetchError,
-            message: fetchError.message,
-            details: fetchError.details,
-            hint: fetchError.hint
-          });
-          throw new Error(fetchError.message);
-        }
-
-        console.log('Documents data:', data);
-
-        if (data) {
-          const mappedDocs = data.map((doc: DocumentRow) => ({
-            id: doc.id,
-            title: doc.title,
-            modifiedAt: new Date(doc.updated_at),
-            size: doc.size || '0 B',
-            caseNumber: doc.case_number || 'N/A',
-            content: doc.content,
-            status: doc.status,
-            type: doc.type
-          }));
-          console.log('Mapped documents:', mappedDocs);
-          setDocuments(mappedDocs);
-        }
-      } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : 'Failed to load documents';
-        console.error('Error loading documents:', {
-          error: err,
-          message: errorMessage,
-          stack: err instanceof Error ? err.stack : undefined
-        });
-        setError(errorMessage);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    loadDocuments();
-  }, []);
-
-  const handleAnalyzeClick = async (doc: DocumentItem) => {
+  const handleAnalyzeClick = useCallback(async (doc: DocumentItem): Promise<void> => {
     setSelectedDocument(doc);
     setShowPreview(true);
     
     const documentForProcessing: Document = {
       id: doc.id,
       title: doc.title,
-      content: doc.content,
+      content: doc.content || '',
       createdAt: doc.modifiedAt,
       updatedAt: doc.modifiedAt
     };
 
     await processDocument(documentForProcessing);
-  };
+  }, [processDocument]);
 
-  const handleBatchUploadComplete = () => {
-    setShowBatchUpload(false);
-    // Refresh documents list
-    window.location.reload();
-  };
-
-  const renderAnalysisPreview = (processedDoc: ProcessedDocument) => {
+  const renderAnalysisPreview = (processedDoc: ProcessedDocument): ReactElement => {
     const entityCount = processedDoc.entities.length;
     const timelineEventCount = processedDoc.timelineEvents.length;
     const crossRefCount = processedDoc.crossReferences.length;
@@ -331,175 +426,201 @@ export default function DocumentsPage() {
     );
   };
 
-  const handleDragOver = (e: React.DragEvent) => {
+  const handleTextSelection = useCallback(() => {
+    const selection = window.getSelection();
+    if (selection && selection.toString().trim()) {
+      setSelectedText(selection.toString().trim());
+    }
+  }, []);
+
+  const handleFiles = useCallback(async (files: File[]): Promise<void> => {
+    try {
+      // Filter files based on uploadType
+      const validFiles = files.filter(file => {
+        const fileExt = `.${file.name.split('.').pop()?.toLowerCase()}`;
+        return DOCUMENT_TYPES[uploadType].acceptedFiles.includes(fileExt);
+      });
+
+      if (validFiles.length === 0) {
+        setError('No valid files selected');
+        return;
+      }
+
+      setShowUploadModal(true);
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to process files';
+      setError(errorMessage);
+    }
+  }, [uploadType]);
+
+  const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
-  };
+  }, []);
 
-  const handleDrop = async (e: React.DragEvent) => {
+  const handleDrop = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
     
     const files = Array.from(e.dataTransfer.files);
-    handleFiles(files);
+    void handleFiles(files);
+  }, [handleFiles]);
+
+  const renderDetailView = () => {
+    const doc = documents.find(d => d.id === selectedDocumentId);
+    if (!doc) return null;
+
+    const type = doc.type as DocumentType;
+    switch (type) {
+      case 'audio_transcript':
+        return <AudioTranscriptSetDetailView id={doc.id} onBack={handleBackFromDetail} />;
+      case 'email':
+        return <EmailSetDetailView id={doc.id} onBack={handleBackFromDetail} />;
+      case 'invoice':
+        return <InvoiceSetDetailView id={doc.id} onBack={handleBackFromDetail} />;
+      case 'legal_filing':
+        return <LegalFilingSetDetailView id={doc.id} onBack={handleBackFromDetail} />;
+      case 'text_message':
+        return <TextMessageSetDetailView id={doc.id} onBack={handleBackFromDetail} />;
+      default:
+        return null;
+    }
   };
 
-  const handleFiles = async (files: File[]) => {
-    // Filter files based on uploadType
-    const validFiles = files.filter(file => {
-      const fileExt = `.${file.name.split('.').pop()?.toLowerCase()}`;
-      return DOCUMENT_TYPES[uploadType].acceptedFiles.includes(fileExt);
-    });
-
-    if (validFiles.length === 0) {
-      setError('No valid files selected');
-      return;
+  const renderEmptyState = () => {
+    const type = activeTab as DocumentType;
+    switch (type) {
+      case 'audio_transcript':
+        return <AudioTranscriptsTab />;
+      case 'email':
+        return <EmailsTab />;
+      case 'invoice':
+        return <InvoicesTab />;
+      case 'legal_filing':
+        return <LegalFilingsTab />;
+      case 'text_message':
+        return <TextMessagesTab />;
+      default:
+        return null;
     }
-
-    setShowBatchUpload(true);
-    // Pass files to BatchUploadModal
-    // You'll need to modify the BatchUploadModal to accept initialFiles
   };
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">Documents</h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400">Manage your legal documents and forms</p>
-        </div>
-        <div className="flex gap-3">
-          <Link 
-            href="/documents/analysis"
-            className="inline-flex items-center px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"
-          >
-            <BarChart2 className="w-5 h-5 mr-2" />
-            Analyze Documents
-          </Link>
-          <button className="inline-flex items-center px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800">
-            <FolderPlus className="w-5 h-5 mr-2" />
-            New Folder
-          </button>
-          <button
-            onClick={() => setShowBatchUpload(true)}
-            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-          >
-            <Upload className="w-5 h-5 mr-2" />
-            Upload Documents
-          </button>
-        </div>
-      </div>
-
-      {/* Add document type selector */}
-      <div className="flex gap-2 mb-4">
-        {Object.entries(DOCUMENT_TYPES).map(([type, config]) => (
-          <button
-            key={type}
-            onClick={() => setUploadType(type as keyof typeof DOCUMENT_TYPES)}
-            className={`flex items-center px-3 py-2 rounded-lg border ${
-              uploadType === type 
-                ? 'border-blue-600 bg-blue-50 text-blue-600' 
-                : 'border-gray-200 hover:bg-gray-50'
-            }`}
-          >
-            <config.icon className={`w-4 h-4 mr-2 ${config.color}`} />
-            {type.split('_').map(word => 
-              word.charAt(0).toUpperCase() + word.slice(1)
-            ).join(' ')}
-          </button>
-        ))}
-      </div>
-
-      {/* Add drag and drop zone */}
-      <div
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
-        className="border-2 border-dashed border-gray-300 rounded-lg p-12 text-center hover:border-blue-500 transition-colors"
-      >
-        <div className="flex flex-col items-center">
-          <Upload className="w-12 h-12 text-gray-400 mb-4" />
-          <p className="text-xl font-medium text-gray-900 dark:text-gray-100">
-            Drag and drop your {uploadType.split('_').join(' ')} files
-          </p>
-          <p className="text-sm text-gray-500 mt-2">
-            or click to browse your computer
-          </p>
-          <input
-            type="file"
-            multiple
-            accept={DOCUMENT_TYPES[uploadType].acceptedFiles}
-            onChange={(e) => handleFiles(Array.from(e.target.files || []))}
-            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-          />
-        </div>
-      </div>
-
-      {/* Documents List */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow divide-y divide-gray-200 dark:divide-gray-700">
-        {documents.map((doc) => (
-          <div
-            key={doc.id}
-            className={`p-4 ${
-              doc.status === 'processing'
-                ? 'opacity-60 bg-gray-50 dark:bg-gray-700/50'
-                : 'hover:bg-gray-50 dark:hover:bg-gray-700'
-            }`}
-          >
-            <div className="flex items-center space-x-4">
-              <FileText className={`w-8 h-8 ${
-                doc.status === 'completed' ? 'text-blue-600' : 'text-gray-400'
-              }`} />
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center space-x-2">
-                  <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
-                    {doc.title}
-                  </p>
-                  {doc.status === 'processing' && (
-                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
-                      Processing
-                    </span>
-                  )}
-                  {doc.status === 'error' && (
-                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">
-                      Error
-                    </span>
-                  )}
-                </div>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Modified {doc.modifiedAt.toLocaleTimeString()} • {doc.size} •{' '}
-                  {doc.type}
-                </p>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className="inline-flex items-center text-sm text-gray-500 dark:text-gray-400">
-                  Case #{doc.caseNumber}
-                </span>
-                {doc.status === 'completed' && (
-                  <button
-                    onClick={() => handleAnalyzeClick(doc)}
-                    className="p-2 text-gray-400 hover:text-blue-600 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
-                  >
-                    <BarChart2 className="w-5 h-5" />
-                  </button>
-                )}
+    <div 
+      className="container mx-auto" 
+      onMouseUp={handleTextSelection}
+      onDragOver={handleDragOver}
+      onDrop={handleDrop}
+    >
+      {showDetailView ? (
+        renderDetailView()
+      ) : (
+        <>
+          {/* Header - flush with top */}
+          <div className="px-6">
+            <div className="flex justify-between items-center" style={{ marginTop: '-18px' }}>
+              <h1 className="text-2xl font-bold text-white">Documents</h1>
+              <div className="flex gap-3">
+                <button 
+                  className="inline-flex items-center h-7 px-4 bg-gray-800/50 text-gray-200 rounded-lg hover:bg-gray-700/50 transition-colors"
+                >
+                  <BarChart2 className="w-4 h-4 mr-2" />
+                  Analyze Documents
+                </button>
+                <button 
+                  onClick={() => setShowUploadModal(true)}
+                  className="inline-flex items-center h-7 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  <Upload className="w-4 h-4 mr-2" />
+                  Upload Documents
+                </button>
               </div>
             </div>
           </div>
-        ))}
-      </div>
 
-      {/* Batch Upload Modal */}
+          <div className="px-6 pt-6 flex gap-6">
+            {/* Main Content */}
+            <div className="flex-1">
+              <Tabs
+                defaultValue={activeTab}
+                value={activeTab}
+                onValueChange={(value) => {
+                  const docType = value as DocumentType;
+                  if (Object.keys(DOCUMENT_TYPES).includes(docType)) {
+                    handleTabChange(docType);
+                  }
+                }}
+                className="w-full"
+              >
+                <TabsList className="w-full flex justify-center">
+                  {Object.entries(DOCUMENT_TYPES).map(([type, config]) => (
+                    <TabsTrigger
+                      key={type}
+                      value={type}
+                      className="flex items-center h-9 px-4 text-sm gap-2 min-w-[140px] justify-center
+                        rounded-md border border-gray-700/50 transition-colors mx-0.5 first:ml-0 last:mr-0
+                        data-[state=active]:bg-gray-800 data-[state=active]:text-white data-[state=active]:border-gray-600
+                        data-[state=inactive]:bg-transparent data-[state=inactive]:text-gray-400 
+                        hover:text-gray-300 hover:bg-gray-800/20
+                        focus:outline-none focus:ring-1 focus:ring-gray-600"
+                    >
+                      <config.icon className={`w-4 h-4 ${config.color}`} />
+                      <span>
+                        {type.split('_').map(word => 
+                          word.charAt(0).toUpperCase() + word.slice(1)
+                        ).join(' ')}
+                      </span>
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+
+                {Object.keys(DOCUMENT_TYPES).map((type) => {
+                  const docType = type as DocumentType;
+                  return (
+                    <TabsContent 
+                      key={type} 
+                      value={type}
+                      className="bg-gray-800/95 border border-gray-700 rounded-b-lg p-4"
+                    >
+                      {isLoading ? (
+                        <div className="flex justify-center items-center py-8">
+                          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-400 mb-3"></div>
+                          <span className="ml-3 text-gray-400">Loading documents...</span>
+                        </div>
+                      ) : documents.length === 0 ? (
+                        renderEmptyState()
+                      ) : (
+                        <DocumentList
+                          documents={filteredDocuments}
+                          onRowClick={handleRowClick}
+                          onEditTags={handleEditTags}
+                          onDelete={handleDelete}
+                          columns={DOCUMENT_COLUMNS[docType].map(col => col.key)}
+                        />
+                      )}
+                    </TabsContent>
+                  );
+                })}
+              </Tabs>
+            </div>
+
+            {/* Extraction Panel */}
+            <div className="w-80">
+              <ExtractionPanel />
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Modals and Error Messages */}
       <BatchUploadModal
-        isOpen={showBatchUpload}
-        onClose={() => setShowBatchUpload(false)}
-        onUploadComplete={handleBatchUploadComplete}
+        isOpen={showUploadModal}
+        onClose={() => setShowUploadModal(false)}
+        onUploadComplete={handleUploadComplete}
       />
 
-      {/* Analysis Preview Modal */}
       {showPreview && currentDocument && !isProcessing && renderAnalysisPreview(currentDocument)}
 
-      {/* Error Message */}
       {error && (
         <div className="fixed bottom-4 right-4 bg-red-50 text-red-700 p-4 rounded-lg shadow-lg">
           <h3 className="font-medium">Analysis Error</h3>

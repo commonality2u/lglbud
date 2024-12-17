@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, PostgrestError } from '@supabase/supabase-js';
 import type { Database } from '@/types/supabase';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -37,10 +37,10 @@ export const supabase = createClient<Database>(
 if (typeof window !== 'undefined') {
   console.log('Testing Supabase connection...');
   supabase.from('documents').select('count').single()
-    .then(({ data, error }) => {
+    .then(({ data, error }: { data: any; error: PostgrestError | null }) => {
       if (error) {
         console.error('Supabase connection error:', {
-          error,
+          code: error.code,
           message: error.message,
           details: error.details,
           hint: error.hint
@@ -49,8 +49,8 @@ if (typeof window !== 'undefined') {
         console.log('Supabase connection successful:', data);
       }
     })
-    .catch(err => {
-      console.error('Unexpected error testing Supabase connection:', err);
+    .catch((err: Error) => {
+      console.error('Unexpected error testing Supabase connection:', err.message);
     });
 }
 
@@ -66,7 +66,7 @@ export function isSupabaseConfigured(): boolean {
     console.log('Supabase configuration check:', isConfigured);
     return isConfigured;
   } catch (error) {
-    console.error('Error checking Supabase configuration:', error);
+    console.error('Error checking Supabase configuration:', error instanceof Error ? error.message : 'Unknown error');
     return false;
   }
 }
@@ -77,22 +77,31 @@ export async function validateSupabaseConnection(): Promise<{
   error?: string;
 }> {
   try {
-    console.log('Validating Supabase connection...');
-    const { data, error } = await supabase.from('documents').select('count');
+    const { data, error } = await supabase
+      .from('documents')
+      .select('count')
+      .limit(1)
+      .single();
+
     if (error) {
-      console.error('Validation error:', error);
+      console.error('Supabase connection error:', {
+        code: error.code,
+        message: error.message,
+        details: error.details,
+        hint: error.hint
+      });
       return { isValid: false, error: error.message };
     }
-    console.log('Validation successful:', data);
+
     return { isValid: true };
-  } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    console.error('Validation error:', error);
+  } catch (err) {
+    const errorMessage = err instanceof Error ? err.message : 'Failed to validate Supabase connection';
+    console.error('Validation error:', errorMessage);
     return { isValid: false, error: errorMessage };
   }
 }
 
-// Helper function to get database connection info
+// Helper function to get database info
 export function getDatabaseInfo() {
   const url = supabaseUrl;
   if (!url) return null;

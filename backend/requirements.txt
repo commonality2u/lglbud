@@ -1,10 +1,48 @@
+# Core dependencies
 fastapi==0.104.1
 uvicorn==0.24.0
-sqlalchemy==2.0.23
-python-jose==3.3.0
-passlib==1.7.4
 python-multipart==0.0.6
-pydantic==2.5.2
-psycopg2-binary==2.9.9
+pydantic>=1.10.13,<2.0.0  # Specific version range for SpaCy compatibility
+supabase==2.10.0
 python-dotenv==1.0.0
-pytest==7.4.3 
+
+# PDF Processing
+pdfplumber==0.11.4
+pdfminer.six==20231228
+pypdfium2>=4.18.0
+
+# NLP and Machine Learning
+spacy==3.7.2
+thinc>=8.1.8,<8.3.0
+dateparser==1.2.0
+langcodes==3.5.0
+catalogue==2.0.10
+spacy-loggers==1.0.5
+spacy-legacy==3.0.12
+murmurhash==1.0.11
+cymem==2.0.10
+preshed==3.0.9
+blis>=0.7.8,<0.8.0  # Updated to match thinc's requirements
+wasabi==1.1.3
+srsly==2.5.0
+confection==0.1.5
+typer<0.10.0,>=0.3.0  # Updated to match spacy's requirements
+
+# HTTP and API
+httpx==0.27.2
+aiofiles==23.2.1
+websockets==13.1
+
+# Testing and Development
+pytest==7.4.3
+black==23.11.0
+isort==5.12.0
+mypy==1.7.1
+
+# Utilities
+tqdm==4.66.1
+rich==13.9.4
+cryptography==44.0.0
+
+# Note: After installing requirements, run:
+# python -m spacy download en_core_web_sm
