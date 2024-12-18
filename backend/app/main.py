@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from .api.upload.route import router as upload_router
 
 app = FastAPI(title="Legal Buddy API")
 
@@ -11,6 +12,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Include routers
+app.include_router(upload_router, prefix="/api/upload", tags=["upload"])
 
 @app.get("/api/health")
 async def health_check():

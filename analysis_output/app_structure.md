@@ -3,29 +3,50 @@
 ```
 Legal Buddy Web App
 └── 📁 legal-buddy
+    ├── 📁 .git
+    ├── 📁 .github
+    ├── 📁 .vscode # Contains the file extensions.json.
     ├── 📁 analysis_output # Contains the analysis output files.
     │   ├── 📄 analysis_progress.json
+    │   ├── 📄 analysis_report.md
     │   ├── 📄 app_structure.md
     │   ├── 📄 codebase_analysis.json
     │   ├── 📄 codebase_analysis.log
     │   ├── 📄 refactor.txt
     │   └── 📄 todo.md
     ├── 📁 backend
+    │   ├── 📁 api
+    │   │   └── 📄 main.py
     │   ├── 📁 app # Next.js App Router directory containing pages and API routes.
+    │   │   ├── 📁 __pycache__
     │   │   ├── 📁 api
     │   │   ├── 📁 core
     │   │   ├── 📁 models
     │   │   ├── 📁 services
     │   │   └── 📄 main.py
+    │   ├── 📁 pdf_processor
+    │   │   ├── 📁 __pycache__
+    │   │   ├── 📄 __init__.py
+    │   │   ├── 📄 annotate_data.py
+    │   │   ├── 📄 models.py
+    │   │   ├── 📄 process_pdfs.py
+    │   │   ├── 📄 process_scheduling_orders.py
+    │   │   ├── 📄 processor.py
+    │   │   ├── 📄 supabase_handler.py
+    │   │   └── 📄 train_spacy.py
     │   ├── 📁 supabase
+    │   │   ├── 📁 .temp
+    │   │   │   └── 📄 cli-latest
     │   │   ├── 📁 migrations
-    │   │   │   └── 📄 20231213_initial_setup.sql
+    │   │   ├── 📄 .gitignore # File containing rules for ignoring specific files and directories in the project repository.
     │   │   └── 📄 config.toml
     │   ├── 📁 tests
     │   ├── 📄 .env # Contains the ANTHROPIC_API_KEY necessary for authenticating with the specific API.
     │   ├── 📄 Dockerfile
-    │   └── 📄 requirements.txt
+    │   ├── 📄 requirements.txt
+    │   └── 📄 run_processor.py
     ├── 📁 frontend
+    │   ├── 📁 .next
     │   ├── 📁 prisma
     │   │   └── 📄 schema.prisma
     │   ├── 📁 public # Static assets directory containing SVG files and other public resources.
@@ -62,6 +83,8 @@ Legal Buddy Web App
     │   │   │   │       └── 📄 page.tsx
     │   │   │   ├── 📁 api
     │   │   │   │   └── 📁 auth
+    │   │   │   │       ├── 📁 [...nextauth]
+    │   │   │   │       │   └── 📄 route.ts
     │   │   │   │       ├── 📁 signup
     │   │   │   │       │   └── 📄 route.ts
     │   │   │   │       └── 📁 test
@@ -70,6 +93,8 @@ Legal Buddy Web App
     │   │   │   │   └── 📄 page.tsx
     │   │   │   ├── 📁 cases
     │   │   │   │   └── 📄 page.tsx
+    │   │   │   ├── 📁 context
+    │   │   │   │   └── 📄 AppContext.tsx
     │   │   │   ├── 📁 dashboard
     │   │   │   │   └── 📄 page.tsx
     │   │   │   ├── 📁 documents
@@ -92,6 +117,19 @@ Legal Buddy Web App
     │   │   │   └── 📄 layout.tsx
     │   │   ├── 📁 components # Reusable React components directory.
     │   │   │   ├── 📁 cases
+    │   │   │   ├── 📁 documents
+    │   │   │   │   ├── 📄 AudioTranscriptSetDetailView.tsx
+    │   │   │   │   ├── 📄 AudioTranscriptsTab.tsx
+    │   │   │   │   ├── 📄 DocumentList.tsx
+    │   │   │   │   ├── 📄 EmailSetDetailView.tsx
+    │   │   │   │   ├── 📄 EmailsTab.tsx
+    │   │   │   │   ├── 📄 ExtractionPanel.tsx
+    │   │   │   │   ├── 📄 InvoiceSetDetailView.tsx
+    │   │   │   │   ├── 📄 InvoicesTab.tsx
+    │   │   │   │   ├── 📄 LegalFilingSetDetailView.tsx
+    │   │   │   │   ├── 📄 LegalFilingsTab.tsx
+    │   │   │   │   ├── 📄 TextMessageSetDetailView.tsx
+    │   │   │   │   └── 📄 TextMessagesTab.tsx
     │   │   │   ├── 📁 landing
     │   │   │   │   ├── 📄 Footer.tsx
     │   │   │   │   └── 📄 Header.tsx
@@ -103,6 +141,11 @@ Legal Buddy Web App
     │   │   │   ├── 📁 providers
     │   │   │   │   ├── 📄 SessionProvider.tsx
     │   │   │   │   └── 📄 ThemeProvider.tsx
+    │   │   │   ├── 📁 ui
+    │   │   │   │   ├── 📄 button.tsx
+    │   │   │   │   ├── 📄 dialog.tsx
+    │   │   │   │   ├── 📄 input.tsx
+    │   │   │   │   └── 📄 tabs.tsx
     │   │   │   ├── 📄 BatchUploadModal.tsx
     │   │   │   ├── 📄 DocumentAnalysis.tsx
     │   │   │   ├── 📄 DocumentTimeline.tsx
@@ -116,12 +159,14 @@ Legal Buddy Web App
     │   │   │   ├── 📄 documentProcessing.ts
     │   │   │   ├── 📄 documents.ts
     │   │   │   ├── 📄 prisma.ts
-    │   │   │   └── 📄 supabase.ts
+    │   │   │   ├── 📄 supabase.ts
+    │   │   │   └── 📄 utils.ts
     │   │   ├── 📁 types
     │   │   │   ├── 📄 document.ts
     │   │   │   └── 📄 supabase.ts
     │   │   └── 📄 middleware.ts
     │   ├── 📄 .env # Contains the ANTHROPIC_API_KEY necessary for authenticating with the specific API.
+    │   ├── 📄 .eslintrc.json
     │   ├── 📄 Dockerfile
     │   ├── 📄 next-env.d.ts # Type definitions for Next.js, including references to necessary global image types.
     │   ├── 📄 next.config.ts
@@ -130,37 +175,29 @@ Legal Buddy Web App
     │   ├── 📄 postcss.config.mjs # Configuration file for PostCSS, defining plugins including Tailwind CSS.
     │   ├── 📄 tailwind.config.ts
     │   └── 📄 tsconfig.json
+    ├── 📁 supabase
+    │   └── 📁 migrations
+    ├── 📁 test
+    │   └── 📁 scheduling-orders
+    │       ├── 📄 Updated Scheduling order Ballys.pdf
+    │       └── 📄 gov.uscourts.txed.227625.27.0.pdf
     ├── 📁 tools
+    ├── 📁 venv
+    ├── 📁 venv311
+    ├── 📄 .cursorignore
     ├── 📄 .cursorrules # Summary: Contains the UI/UX plan, app structure, file descriptions, and API routes.
     ├── 📄 .env # Contains the ANTHROPIC_API_KEY necessary for authenticating with the specific API.
+    ├── 📄 .gitignore # File containing rules for ignoring specific files and directories in the project repository.
     ├── 📄 README.md # README.md: Contains information about a Next.js project, including setup instructions.
+    ├── 📄 ROADMAP.md
     ├── 📄 codebase_analysis.py # This file performs code analysis, including checking for validation issues and analyzing imports.
     ├── 📄 docker-compose.yml
     ├── 📄 generate_todo.py
+    ├── 📄 next.config.ts
+    ├── 📄 package-lock.json
     └── 📄 package.json # Defines project details, including scripts, dependencies, and devDependencies.
 
 Legend:
 📁 Directory
 📄 File
 ```
-
-
-## Dependencies
-
-### NPM Packages Required
-
-### Python Packages Required
-- aiohttp
-- anthropic
-- ast
-- asyncio
-- colorama
-- dotenv
-- fastapi
-- logging
-- random
-- subprocess
-- tqdm
-
-### Import Issues
-- D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\src\app\layout.tsx: Missing local import: ./globals.css

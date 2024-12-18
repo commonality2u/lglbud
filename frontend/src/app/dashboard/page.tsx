@@ -1,13 +1,19 @@
 'use client';
 
-import { 
-  DocumentTextIcon, 
-  CalendarIcon, 
-  CheckCircleIcon, 
-  FolderIcon,
-  ClockIcon,
-  ExclamationCircleIcon,
-} from '@heroicons/react/24/outline';
+import React from 'react';
+import {
+  FileText,
+  Calendar,
+  CheckCircle,
+  Folder,
+  Clock,
+  AlertCircle,
+  Search,
+  Lightbulb,
+  Percent,
+  Cpu,
+} from 'lucide-react';
+import Link from 'next/link';
 
 interface StatCardProps {
   icon: React.ReactNode;
@@ -34,33 +40,46 @@ interface DeadlineItemProps {
 export default function DashboardPage() {
   return (
     <div className="py-6">
-      <h1 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Dashboard</h1>
-      
+      {/* Header with Global Search */}
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Dashboard</h1>
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <input
+            type="text"
+            placeholder="Search all documents, cases..."
+            className="w-64 pl-10 pr-4 py-2 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-100"
+            aria-label="Global Search"
+            title="Search all documents, cases, and resources"
+          />
+        </div>
+      </div>
+
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <StatCard
-          icon={<FolderIcon className="h-6 w-6 text-blue-500" />}
+          icon={<Folder className="h-6 w-6 text-blue-500" />}
           title="Active Cases"
           value="12"
           subtitle="+2 this month"
           className="bg-white dark:bg-gray-800"
         />
         <StatCard
-          icon={<DocumentTextIcon className="h-6 w-6 text-yellow-500" />}
+          icon={<FileText className="h-6 w-6 text-yellow-500" />}
           title="Pending Documents"
           value="5"
           subtitle="3 urgent"
           className="bg-white dark:bg-gray-800"
         />
         <StatCard
-          icon={<CalendarIcon className="h-6 w-6 text-red-500" />}
+          icon={<Calendar className="h-6 w-6 text-red-500" />}
           title="Upcoming Deadlines"
           value="8"
           subtitle="Next: Tomorrow"
           className="bg-white dark:bg-gray-800"
         />
         <StatCard
-          icon={<CheckCircleIcon className="h-6 w-6 text-green-500" />}
+          icon={<CheckCircle className="h-6 w-6 text-green-500" />}
           title="Tasks Completed"
           value="85%"
           subtitle="+10% from last week"
@@ -76,25 +95,25 @@ export default function DashboardPage() {
             <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Recent Activity</h2>
             <div className="space-y-4">
               <ActivityItem
-                icon={<DocumentTextIcon className="h-5 w-5 text-blue-500" />}
+                icon={<FileText className="h-5 w-5 text-blue-500" />}
                 title="Document Updated"
                 description="Motion for Summary Judgment.pdf"
                 time="2 hours ago"
               />
               <ActivityItem
-                icon={<CalendarIcon className="h-5 w-5 text-purple-500" />}
+                icon={<Calendar className="h-5 w-5 text-purple-500" />}
                 title="Court Date Scheduled"
                 description="Initial Hearing - Case #123-45"
                 time="Yesterday"
               />
               <ActivityItem
-                icon={<ClockIcon className="h-5 w-5 text-yellow-500" />}
+                icon={<Clock className="h-5 w-5 text-yellow-500" />}
                 title="Deadline Approaching"
                 description="Response to Motion Due"
                 time="In 3 days"
               />
               <ActivityItem
-                icon={<ExclamationCircleIcon className="h-5 w-5 text-red-500" />}
+                icon={<AlertCircle className="h-5 w-5 text-red-500" />}
                 title="Action Required"
                 description="Document Review Pending"
                 time="Today"
@@ -136,6 +155,91 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
+
+      {/* AI Document Insights */}
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-6">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+              <Lightbulb className="w-5 h-5 mr-2 text-blue-500" />
+              AI Document Insights
+          </h2>
+          <div className="space-y-4">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Review key findings and recommendations from your processed documents.
+              </p>
+              <div className="flex items-center justify-between bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                  <div>
+                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                        Recent Document Analysis:
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                        Motion for Summary Judgment.pdf
+                    </p>
+                  </div>
+                  <button className="px-3 py-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 dark:bg-blue-900/20 dark:text-blue-400 text-sm">
+                    View Analysis
+                  </button>
+              </div>
+          </div>
+      </div>
+
+      {/* Resource Utilization & ROI Calculator */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+              <Cpu className="w-5 h-5 mr-2 text-green-500" />
+              Resource Utilization
+            </h2>
+            <div className="space-y-2">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Track your time and resource usage to optimize efficiency.
+              </p>
+              <div className="flex justify-between items-center mt-2">
+                <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                  Total Time Spent:
+                </span>
+                <span className="text-sm text-gray-700 dark:text-gray-300">
+                  15 hours this week
+                </span>
+              </div>
+              <div className="flex justify-between items-center mt-2">
+                <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                  Documents Processed:
+                </span>
+                <span className="text-sm text-gray-700 dark:text-gray-300">
+                  12 documents
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+              <Percent className="w-5 h-5 mr-2 text-yellow-500" />
+              ROI Calculator
+            </h2>
+            <div className="space-y-2">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Estimate your return on investment with Legal Buddy.
+              </p>
+              <div className="flex justify-between items-center mt-2">
+                <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                  Estimated Cost Savings:
+                </span>
+                <span className="text-sm text-gray-700 dark:text-gray-300">
+                  $2,500
+                </span>
+              </div>
+                <div className="flex justify-between items-center mt-2">
+                    <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                        Time Saved:
+                    </span>
+                    <span className="text-sm text-gray-700 dark:text-gray-300">
+                        10 hours
+                    </span>
+                </div>
+            </div>
+          </div>
+        </div>
     </div>
   );
 }

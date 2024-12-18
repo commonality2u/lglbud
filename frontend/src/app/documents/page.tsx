@@ -4,24 +4,24 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import { FileText, Upload, BarChart2, X, Mic, Mail, MessageSquare, Scale, FileSignature } from 'lucide-react';
 import type { RealtimePostgresChangesPayload } from '@supabase/supabase-js';
-import type { Database } from '@/types/supabase';
-import { supabase } from '@/lib/supabase';
-import { useDocumentProcessor } from '@/hooks/useDocumentProcessor';
-import type { Document, ProcessedDocument } from '@/types/document';
-import { BatchUploadModal } from '@/components/BatchUploadModal';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import EmailsTab from '@/components/documents/EmailsTab';
-import LegalFilingsTab from '@/components/documents/LegalFilingsTab';
-import AudioTranscriptsTab from '@/components/documents/AudioTranscriptsTab';
-import TextMessagesTab from '@/components/documents/TextMessagesTab';
-import InvoicesTab from '@/components/documents/InvoicesTab';
-import ExtractionPanel from '@/components/documents/ExtractionPanel';
-import DocumentList from '@/components/documents/DocumentList';
-import AudioTranscriptSetDetailView from '@/components/documents/AudioTranscriptSetDetailView';
-import EmailSetDetailView from '@/components/documents/EmailSetDetailView';
-import InvoiceSetDetailView from '@/components/documents/InvoiceSetDetailView';
-import LegalFilingSetDetailView from '@/components/documents/LegalFilingSetDetailView';
-import TextMessageSetDetailView from '@/components/documents/TextMessageSetDetailView';
+import type { Database } from "../types/supabase";
+import { supabase } from "../lib/supabase";
+import { useDocumentProcessor } from "../hooks/useDocumentProcessor";
+import type { Document, ProcessedDocument } from "../types/document";
+import { BatchUploadModal } from "../components/BatchUploadModal";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
+import EmailsTab from "../components/documents/EmailsTab";
+import LegalFilingsTab from "../components/documents/LegalFilingsTab";
+import AudioTranscriptsTab from "../components/documents/AudioTranscriptsTab";
+import TextMessagesTab from "../components/documents/TextMessagesTab";
+import InvoicesTab from "../components/documents/InvoicesTab";
+import ExtractionPanel from "../components/documents/ExtractionPanel";
+import DocumentList from "../components/documents/DocumentList";
+import AudioTranscriptSetDetailView from "../components/documents/AudioTranscriptSetDetailView";
+import EmailSetDetailView from "../components/documents/EmailSetDetailView";
+import InvoiceSetDetailView from "../components/documents/InvoiceSetDetailView";
+import LegalFilingSetDetailView from "../components/documents/LegalFilingSetDetailView";
+import TextMessageSetDetailView from "../components/documents/TextMessageSetDetailView";
 import type { ReactElement } from 'react';
 
 type DocumentRow = Database['public']['Tables']['documents']['Row'];
@@ -48,11 +48,11 @@ interface DocumentItem {
 type RealtimeUpdatePayload = {
   id: string;
   status: DocumentRow['status'];
-  [key: string]: any;
+  [key: string]: string | number | boolean | null;
 }
 
 type RealtimePayload = RealtimePostgresChangesPayload<{
-  old: { [key: string]: any };
+  old: Record<string, unknown>;
   new: RealtimeUpdatePayload;
 }>;
 
@@ -154,7 +154,7 @@ export default function DocumentsPage(): ReactElement {
     onProcessingComplete: (result) => {
       console.log('Document processing completed:', result);
     },
-    onError: (error) => {
+    onError: (error: Error) => {
       console.error('Document processing failed:', error);
       setError(error.message);
     }
@@ -177,7 +177,10 @@ export default function DocumentsPage(): ReactElement {
 
       const { data, error: fetchError } = await query;
 
-      if (fetchError) throw fetchError;
+      if (fetchError) {
+        setError(fetchError.message);
+        return;
+      }
 
       if (data) {
         const mappedDocs = data.map((doc: DocumentRow) => ({
@@ -244,7 +247,10 @@ export default function DocumentsPage(): ReactElement {
         .delete()
         .eq('id', id);
 
-      if (error) throw error;
+      if (error) {
+        setError(error.message);
+        return;
+      }
 
       setDocuments(prev => prev.filter(doc => doc.id !== id));
     } catch (err) {
@@ -433,38 +439,48 @@ export default function DocumentsPage(): ReactElement {
     }
   }, []);
 
-  const handleFiles = useCallback(async (files: File[]): Promise<void> => {
-    try {
-      // Filter files based on uploadType
-      const validFiles = files.filter(file => {
-        const fileExt = `.${file.name.split('.').pop()?.toLowerCase()}`;
-        return DOCUMENT_TYPES[uploadType].acceptedFiles.includes(fileExt);
-      });
-
-      if (validFiles.length === 0) {
-        setError('No valid files selected');
-        return;
-      }
-
+  const handleFiles = useCallback((files: File[]) => {
+    console.log('Processing files with uploadType:', uploadType);
+    const acceptedExtensions = DOCUMENT_TYPES[uploadType].acceptedFiles.split(',');
+    
+    const filteredFiles = files.filter(file => {
+      const extension = '.' + file.name.split('.').pop()?.toLowerCase();
+      return extension && acceptedExtensions.includes(extension);
+    });
+    
+    console.log('Filtered files:', filteredFiles);
+    
+    if (filteredFiles.length > 0) {
       setShowUploadModal(true);
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to process files';
-      setError(errorMessage);
+    } else {
+      setError(`Only ${DOCUMENT_TYPES[uploadType].acceptedFiles} files are allowed`);
     }
   }, [uploadType]);
 
-  const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
+  const handleFileInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('File input change event');
+    if (e.target.files) {
+      const files = Array.from(e.target.files);
+      console.log('Selected files:', files);
+      handleFiles(files);
+    }
+  }, [handleFiles]);
+
+  const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    console.log('Drag over event:', e.type);
   }, []);
 
-  const handleDrop = useCallback((e: React.DragEvent<HTMLDivElement>) => {
+  const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    console.log('Drop event:', e.type);
     
     const files = Array.from(e.dataTransfer.files);
-    void handleFiles(files);
-  }, [handleFiles]);
+    console.log('Dropped files:', files);
+    handleFiles(files);
+  }, []);
 
   const renderDetailView = () => {
     const doc = documents.find(d => d.id === selectedDocumentId);
@@ -617,14 +633,27 @@ export default function DocumentsPage(): ReactElement {
         isOpen={showUploadModal}
         onClose={() => setShowUploadModal(false)}
         onUploadComplete={handleUploadComplete}
+        uploadType={uploadType}
+        caseNumber="DEFAULT_CASE" // You might want to get this from a state or prop
       />
 
       {showPreview && currentDocument && !isProcessing && renderAnalysisPreview(currentDocument)}
 
       {error && (
-        <div className="fixed bottom-4 right-4 bg-red-50 text-red-700 p-4 rounded-lg shadow-lg">
-          <h3 className="font-medium">Analysis Error</h3>
+        <div 
+          className="fixed bottom-4 right-4 bg-red-50 text-red-700 p-4 rounded-lg shadow-lg"
+          role="alert"
+          aria-live="polite"
+        >
+          <h3 className="font-medium">Error</h3>
           <p className="text-sm">{error}</p>
+          <button
+            onClick={() => setError(null)}
+            className="absolute top-2 right-2 text-red-500 hover:text-red-700"
+            aria-label="Dismiss error"
+          >
+            <X className="w-4 h-4" />
+          </button>
         </div>
       )}
     </div>

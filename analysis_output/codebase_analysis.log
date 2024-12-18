@@ -1,65 +1,344 @@
-2024-12-14 21:37:23,956 - WARNING - Could not load existing analyses, starting fresh
-2024-12-14 21:37:24,270 - INFO - No previous progress found, starting fresh
-2024-12-14 21:37:24,274 - INFO - Successfully loaded plan from .cursorrules using utf-8 encoding
-2024-12-14 21:37:24,274 - INFO - No previous progress found, starting fresh
-2024-12-14 21:37:37,848 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:37:48,026 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:37:57,756 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:38:06,859 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:38:16,801 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:38:26,571 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:38:39,856 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:38:51,768 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:39:01,597 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:39:12,628 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:39:23,051 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:39:33,000 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:39:43,881 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:39:57,366 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:40:07,456 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:40:18,793 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:40:30,070 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:40:41,609 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:40:52,761 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:41:04,988 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:41:30,343 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 529 "
-2024-12-14 21:41:30,346 - INFO - Retrying request to /v1/messages in 0.494091 seconds
-2024-12-14 21:41:40,353 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:41:50,328 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:42:02,010 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:42:13,986 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:42:25,979 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:42:36,231 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:42:47,288 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:42:58,917 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:43:08,263 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:43:18,099 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:43:30,698 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:43:42,302 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:43:54,525 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:44:06,024 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:44:18,708 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:44:30,911 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:44:42,866 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:44:55,664 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:45:06,140 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:45:17,183 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:45:28,061 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:45:38,279 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:45:51,214 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:46:03,412 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:46:14,619 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:46:26,167 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:46:38,284 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:46:50,649 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:47:00,456 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:47:12,380 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:47:22,972 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:47:35,452 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:47:46,722 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:47:58,785 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:48:09,907 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:48:20,959 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:48:31,353 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:48:42,456 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2024-12-14 21:48:51,863 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 13:42:54,954 - INFO - No previous progress found, starting fresh
+2024-12-15 13:42:54,954 - INFO - Successfully loaded plan from .cursorrules using utf-8 encoding
+2024-12-15 13:42:54,954 - INFO - No previous progress found, starting fresh
+2024-12-15 13:43:09,503 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 13:43:09,519 - ERROR - Error saving analysis results: Object of type ImplementationStatus is not JSON serializable
+2024-12-15 13:43:20,802 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 13:43:20,817 - ERROR - Error saving analysis results: Object of type ImplementationStatus is not JSON serializable
+2024-12-15 21:45:52,730 - WARNING - Could not load existing analyses, starting fresh
+2024-12-15 21:45:53,075 - INFO - Successfully loaded plan from .cursorrules using utf-8 encoding
+2024-12-15 21:46:04,776 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:50:30,676 - INFO - Loaded 1 existing analyses
+2024-12-15 21:50:31,014 - INFO - Successfully loaded plan from .cursorrules using utf-8 encoding
+2024-12-15 21:50:41,740 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:50:41,755 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:50:51,159 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:50:51,170 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:51:02,585 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:51:02,601 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:51:15,031 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:51:15,031 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:51:27,095 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:51:27,109 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:51:37,826 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:51:37,826 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:51:50,292 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:51:50,293 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:52:01,507 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:52:01,507 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:52:12,780 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:52:12,795 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:52:25,190 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:52:25,207 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:52:37,049 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:52:37,064 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:52:48,257 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:52:48,272 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:52:59,850 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:52:59,850 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:53:12,362 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:53:12,362 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\src\app\layout.tsx: name 'asdict' is not defined
+2024-12-15 21:53:12,376 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\src\app\layout.tsx
+2024-12-15 21:53:24,924 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:53:24,924 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:53:37,049 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:53:37,060 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:53:49,962 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:53:49,979 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:54:01,604 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:54:01,604 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:54:13,333 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:54:13,346 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:54:26,965 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:54:26,967 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:54:40,548 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:54:40,548 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:54:50,725 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:54:50,725 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:55:01,981 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:55:01,981 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:55:12,283 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:55:12,283 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:55:24,212 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:55:24,212 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:55:34,434 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:55:34,434 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:55:46,303 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:55:46,318 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:55:56,115 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:55:56,137 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:56:08,191 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:56:08,207 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:56:22,253 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:56:22,260 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:56:36,279 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:56:36,289 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:56:49,141 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:56:49,148 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:57:03,594 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:57:03,594 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:57:18,435 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:57:18,451 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:57:30,835 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:57:30,835 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:57:42,556 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:57:42,573 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:57:55,708 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:57:55,717 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:58:09,370 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:58:09,386 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:58:21,543 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:58:21,566 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:58:33,968 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:58:33,976 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:58:46,054 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:58:46,071 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:58:57,304 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:58:57,315 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:59:09,516 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:59:09,538 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:59:22,328 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:59:22,359 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:59:33,216 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:59:33,232 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:59:44,206 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:59:44,214 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 21:59:55,994 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 21:59:56,007 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 22:00:06,875 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 22:00:06,875 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 22:00:19,959 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 22:00:19,977 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 22:00:31,677 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 22:00:31,696 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 22:00:45,473 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 22:00:45,488 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 22:00:56,798 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 22:00:56,810 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 22:01:08,794 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 22:01:08,806 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 22:01:21,896 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 22:01:21,901 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 22:01:33,882 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 22:01:33,896 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 22:01:46,522 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 22:01:46,539 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 22:02:00,029 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 22:02:00,050 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 22:02:13,322 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 22:02:13,333 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 22:02:26,729 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 22:02:26,752 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 22:02:39,227 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 22:02:39,228 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 22:02:52,746 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 22:02:52,756 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 22:03:02,960 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 22:03:02,986 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 22:03:14,877 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 22:03:14,905 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 22:03:27,299 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 22:03:27,316 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 22:03:39,898 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 22:03:39,928 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 22:03:51,602 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 22:03:51,621 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 22:04:01,015 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 22:04:01,034 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 22:04:10,991 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 22:04:11,026 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 22:04:22,849 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 22:04:22,854 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 22:04:34,087 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 22:04:34,109 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 22:04:45,064 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 22:04:45,079 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 22:04:55,558 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 22:04:55,573 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 22:05:05,971 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 22:05:05,995 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 22:05:17,908 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-15 22:05:17,908 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-15 22:05:18,048 - INFO - Analysis report generated at analysis_output\analysis_report.md
+2024-12-16 13:08:40,577 - INFO - Loaded 74 existing analyses
+2024-12-16 13:08:41,833 - INFO - Successfully loaded plan from .cursorrules using utf-8 encoding
+2024-12-16 13:08:52,728 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-16 13:08:52,748 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-16 13:09:12,401 - INFO - Loaded 75 existing analyses
+2024-12-16 13:09:13,531 - INFO - Successfully loaded plan from .cursorrules using utf-8 encoding
+2024-12-16 13:09:13,847 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\package-lock.json: 'OpenAI' object has no attribute 'messages'
+2024-12-16 13:09:13,848 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\package-lock.json
+2024-12-16 13:09:13,850 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\run_processor.py: 'OpenAI' object has no attribute 'messages'
+2024-12-16 13:09:13,851 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\run_processor.py
+2024-12-16 13:09:13,852 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\api\main.py: 'OpenAI' object has no attribute 'messages'
+2024-12-16 13:09:13,853 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\api\main.py
+2024-12-16 13:09:13,854 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\annotate_data.py: 'OpenAI' object has no attribute 'messages'
+2024-12-16 13:09:13,854 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\annotate_data.py
+2024-12-16 13:09:15,854 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\models.py: 'OpenAI' object has no attribute 'messages'
+2024-12-16 13:09:15,855 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\models.py
+2024-12-16 13:09:15,857 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\processor.py: 'OpenAI' object has no attribute 'messages'
+2024-12-16 13:09:15,857 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\processor.py
+2024-12-16 13:09:15,858 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\process_pdfs.py: 'OpenAI' object has no attribute 'messages'
+2024-12-16 13:09:15,858 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\process_pdfs.py
+2024-12-16 13:09:15,860 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\process_scheduling_orders.py: 'OpenAI' object has no attribute 'messages'
+2024-12-16 13:09:15,861 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\process_scheduling_orders.py
+2024-12-16 13:16:00,880 - INFO - Loaded 75 existing analyses
+2024-12-16 13:16:02,027 - INFO - Successfully loaded plan from .cursorrules using utf-8 encoding
+2024-12-16 13:16:02,351 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\package-lock.json: name 'args' is not defined
+2024-12-16 13:16:02,352 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\package-lock.json
+2024-12-16 13:16:02,354 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\run_processor.py: name 'args' is not defined
+2024-12-16 13:16:02,355 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\run_processor.py
+2024-12-16 13:16:02,356 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\api\main.py: name 'args' is not defined
+2024-12-16 13:16:02,356 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\api\main.py
+2024-12-16 13:16:02,358 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\annotate_data.py: name 'args' is not defined
+2024-12-16 13:16:02,358 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\annotate_data.py
+2024-12-16 13:16:04,357 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\models.py: name 'args' is not defined
+2024-12-16 13:16:04,358 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\models.py
+2024-12-16 13:16:04,360 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\processor.py: name 'args' is not defined
+2024-12-16 13:16:04,361 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\processor.py
+2024-12-16 13:16:04,362 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\process_pdfs.py: name 'args' is not defined
+2024-12-16 13:16:04,362 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\process_pdfs.py
+2024-12-16 13:16:04,364 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\process_scheduling_orders.py: name 'args' is not defined
+2024-12-16 13:16:04,365 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\process_scheduling_orders.py
+2024-12-16 14:00:17,018 - INFO - Loaded 75 existing analyses
+2024-12-16 14:00:18,350 - INFO - Successfully loaded plan from .cursorrules using utf-8 encoding
+2024-12-16 14:00:18,782 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\package-lock.json: name 'args' is not defined
+2024-12-16 14:00:18,783 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\package-lock.json
+2024-12-16 14:00:18,785 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\run_processor.py: name 'args' is not defined
+2024-12-16 14:00:18,785 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\run_processor.py
+2024-12-16 14:00:18,786 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\api\main.py: name 'args' is not defined
+2024-12-16 14:00:18,787 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\api\main.py
+2024-12-16 14:00:18,789 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\annotate_data.py: name 'args' is not defined
+2024-12-16 14:00:18,789 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\annotate_data.py
+2024-12-16 14:00:20,782 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\models.py: name 'args' is not defined
+2024-12-16 14:00:20,783 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\models.py
+2024-12-16 14:00:20,785 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\processor.py: name 'args' is not defined
+2024-12-16 14:00:20,785 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\processor.py
+2024-12-16 14:00:20,787 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\process_pdfs.py: name 'args' is not defined
+2024-12-16 14:00:20,787 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\process_pdfs.py
+2024-12-16 14:00:20,790 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\process_scheduling_orders.py: name 'args' is not defined
+2024-12-16 14:00:20,790 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\process_scheduling_orders.py
+2024-12-16 14:00:22,786 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\supabase_handler.py: name 'args' is not defined
+2024-12-16 14:00:22,787 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\supabase_handler.py
+2024-12-16 14:00:22,789 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\train_spacy.py: name 'args' is not defined
+2024-12-16 14:00:22,789 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\train_spacy.py
+2024-12-16 14:00:22,791 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\__init__.py: name 'args' is not defined
+2024-12-16 14:00:22,792 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\__init__.py
+2024-12-16 14:00:22,794 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\next-env.d.ts: name 'args' is not defined
+2024-12-16 14:00:22,795 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\next-env.d.ts
+2024-12-16 14:00:24,799 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\package-lock.json: name 'args' is not defined
+2024-12-16 14:00:24,799 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\package-lock.json
+2024-12-16 14:00:24,801 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\src\app\layout.tsx: name 'args' is not defined
+2024-12-16 14:00:24,802 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\src\app\layout.tsx
+2024-12-16 14:00:24,803 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\supabase\migrations\20231213_initial_setup.sql: name 'args' is not defined
+2024-12-16 14:00:24,803 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\supabase\migrations\20231213_initial_setup.sql
+2024-12-16 14:00:24,907 - INFO - Analysis report generated at analysis_output\analysis_report.md
+2024-12-16 14:02:36,439 - INFO - Loaded 75 existing analyses
+2024-12-16 14:02:37,744 - INFO - Successfully loaded plan from .cursorrules using utf-8 encoding
+2024-12-16 14:02:38,124 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\package-lock.json: name 'prompt' is not defined
+2024-12-16 14:02:38,124 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\package-lock.json
+2024-12-16 14:02:38,127 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\run_processor.py: name 'prompt' is not defined
+2024-12-16 14:02:38,128 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\run_processor.py
+2024-12-16 14:02:38,131 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\api\main.py: name 'prompt' is not defined
+2024-12-16 14:02:38,132 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\api\main.py
+2024-12-16 14:02:38,135 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\annotate_data.py: name 'prompt' is not defined
+2024-12-16 14:02:38,136 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\annotate_data.py
+2024-12-16 14:02:40,137 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\models.py: name 'prompt' is not defined
+2024-12-16 14:02:40,137 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\models.py
+2024-12-16 14:02:40,139 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\processor.py: name 'prompt' is not defined
+2024-12-16 14:02:40,139 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\processor.py
+2024-12-16 14:02:40,141 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\process_pdfs.py: name 'prompt' is not defined
+2024-12-16 14:02:40,141 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\process_pdfs.py
+2024-12-16 14:02:40,144 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\process_scheduling_orders.py: name 'prompt' is not defined
+2024-12-16 14:02:40,144 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\pdf_processor\process_scheduling_orders.py
+2024-12-16 14:08:36,932 - INFO - Loaded 75 existing analyses
+2024-12-16 14:08:38,089 - INFO - Successfully loaded plan from .cursorrules using utf-8 encoding
+2024-12-16 14:09:04,269 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-16 14:09:04,273 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\package-lock.json: object ChatCompletion can't be used in 'await' expression
+2024-12-16 14:09:04,274 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\package-lock.json
+2024-12-16 14:09:13,155 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-16 14:09:13,171 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\run_processor.py: object ChatCompletion can't be used in 'await' expression
+2024-12-16 14:09:13,172 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\run_processor.py
+2024-12-16 14:09:24,468 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-16 14:09:24,472 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\api\main.py: object ChatCompletion can't be used in 'await' expression
+2024-12-16 14:09:24,473 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\backend\api\main.py
+2024-12-16 14:12:51,667 - INFO - Loaded 75 existing analyses
+2024-12-16 14:12:52,823 - INFO - Successfully loaded plan from .cursorrules using utf-8 encoding
+2024-12-16 14:13:10,070 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-16 14:13:10,076 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\package-lock.json: 'ChatCompletion' object has no attribute 'content'
+2024-12-16 14:13:10,076 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\package-lock.json
+2024-12-16 14:16:11,168 - INFO - Loaded 75 existing analyses
+2024-12-16 14:16:12,316 - INFO - Successfully loaded plan from .cursorrules using utf-8 encoding
+2024-12-16 14:16:26,836 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-16 14:16:26,851 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-16 14:16:33,069 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-16 14:16:33,087 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-16 14:16:42,138 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-16 14:16:42,152 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-16 14:17:04,418 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-16 14:17:04,434 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-16 14:17:19,483 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-16 14:17:19,495 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-16 14:17:30,209 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-16 14:17:30,223 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-16 14:17:43,467 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-16 14:17:43,482 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-16 14:18:10,215 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-16 14:18:10,233 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-16 14:18:21,578 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-16 14:18:21,594 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-16 14:18:34,691 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-16 14:18:34,709 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-16 14:18:42,657 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-16 14:18:42,671 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-16 14:18:51,239 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-16 14:18:51,279 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-16 14:19:18,249 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-16 14:19:18,264 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-16 14:19:25,966 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-16 14:19:25,967 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\src\app\layout.tsx: name 'asdict' is not defined
+2024-12-16 14:19:25,968 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\src\app\layout.tsx
+2024-12-16 14:19:40,568 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-16 14:19:40,582 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-16 14:19:40,703 - INFO - Analysis report generated at analysis_output\analysis_report.md
+2024-12-16 14:27:21,741 - INFO - Loaded 89 existing analyses
+2024-12-16 14:27:22,918 - INFO - Successfully loaded plan from .cursorrules using utf-8 encoding
+2024-12-16 14:27:34,499 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-16 14:27:34,503 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\src\app\layout.tsx: name 'asdict' is not defined
+2024-12-16 14:27:34,503 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\src\app\layout.tsx
+2024-12-16 14:27:34,623 - INFO - Analysis report generated at analysis_output\analysis_report.md
+2024-12-16 14:33:18,683 - INFO - Loaded 89 existing analyses
+2024-12-16 14:33:19,849 - INFO - Successfully loaded plan from .cursorrules using utf-8 encoding
+2024-12-16 14:33:28,011 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-16 14:33:28,014 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\src\app\layout.tsx: name 'asdict' is not defined
+2024-12-16 14:33:28,015 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\src\app\layout.tsx
+2024-12-16 14:33:28,126 - INFO - Analysis report generated at analysis_output\analysis_report.md
+2024-12-16 14:33:44,308 - INFO - Loaded 89 existing analyses
+2024-12-16 14:33:45,580 - INFO - Successfully loaded plan from .cursorrules using utf-8 encoding
+2024-12-16 14:34:00,865 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-16 14:34:00,871 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\src\app\layout.tsx: name 'asdict' is not defined
+2024-12-16 14:34:00,872 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\src\app\layout.tsx
+2024-12-16 14:34:01,014 - INFO - Analysis report generated at analysis_output\analysis_report.md
+2024-12-16 14:39:14,120 - INFO - Loaded 89 existing analyses
+2024-12-16 14:39:15,363 - INFO - Successfully loaded plan from .cursorrules using utf-8 encoding
+2024-12-16 14:39:24,029 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-16 14:39:24,034 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\src\app\layout.tsx: name 'asdict' is not defined
+2024-12-16 14:39:24,034 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\src\app\layout.tsx
+2024-12-16 14:39:24,155 - INFO - Analysis report generated at analysis_output\analysis_report.md
+2024-12-16 14:42:04,262 - INFO - Loaded 89 existing analyses
+2024-12-16 14:42:04,300 - INFO - Successfully loaded plan from .cursorrules using utf-8 encoding
+2024-12-16 14:42:15,879 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-16 14:42:15,884 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\src\app\layout.tsx: name 'asdict' is not defined
+2024-12-16 14:42:15,885 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\src\app\layout.tsx
+2024-12-16 14:42:16,002 - INFO - Analysis report generated at analysis_output\analysis_report.md
+2024-12-16 14:44:49,568 - INFO - Loaded 89 existing analyses
+2024-12-16 14:44:49,617 - INFO - Successfully loaded plan from .cursorrules using utf-8 encoding
+2024-12-16 14:44:57,686 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-16 14:44:57,694 - ERROR - Error analyzing D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\src\app\layout.tsx: name 'asdict' is not defined
+2024-12-16 14:44:57,695 - ERROR - Analysis failed for D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\src\app\layout.tsx
+2024-12-16 14:44:57,806 - INFO - Analysis report generated at analysis_output\analysis_report.md
+2024-12-16 14:48:33,669 - INFO - Loaded 89 existing analyses
+2024-12-16 14:48:33,730 - INFO - Successfully loaded plan from .cursorrules using utf-8 encoding
+2024-12-16 14:48:41,227 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-12-16 14:48:41,248 - INFO - Successfully saved analysis results to analysis_output\codebase_analysis.json
+2024-12-16 14:48:41,359 - INFO - Analysis report generated at analysis_output\analysis_report.md

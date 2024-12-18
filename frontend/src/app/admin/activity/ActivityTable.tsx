@@ -2,6 +2,14 @@
 
 import React from 'react'
 import { Database } from '@/types/supabase'
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableHead,
+  TableRow,
+  TableCell
+} from "@/components/ui/table"
 
 type Activity = Database['public']['Tables']['investor_activity']['Row']
 
@@ -14,26 +22,26 @@ export default function ActivityTable({ activity }: ActivityTableProps) {
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Investor Activity</h1>
       <div className="overflow-x-auto">
-        <table className="min-w-full">
-          <thead>
-            <tr>
-              <th>User</th>
-              <th>Action</th>
-              <th>Timestamp</th>
-              <th>Details</th>
-            </tr>
-          </thead>
-          <tbody>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>User</TableHead>
+              <TableHead>Action</TableHead>
+              <TableHead>Timestamp</TableHead>
+              <TableHead>Details</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {activity.map((item) => (
-              <tr key={item.id}>
-                <td>{item.user_id}</td>
-                <td>{item.action}</td>
-                <td>{new Date(item.timestamp).toLocaleString()}</td>
-                <td>{JSON.stringify(item.details)}</td>
-              </tr>
+              <TableRow key={item.id}>
+                <TableCell>{item.user_id}</TableCell>
+                <TableCell>{item.action}</TableCell>
+                <TableCell>{new Date(item.timestamp).toLocaleString()}</TableCell>
+                <TableCell>{JSON.stringify(item.details)}</TableCell>
+              </TableRow>
             ))}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </div>
     </div>
   )

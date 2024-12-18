@@ -130,9 +130,12 @@ Legend:
 📁 Directory
 📄 File
 
+
+
+
 APP_ARCHITECTURE:
   FRAMEWORK: "Next.js"
-  STATE_MANAGEMENT: "Redux"
+  STATE_MANAGEMENT: "React Context"
   UI_FRAMEWORK: "TailwindCSS"
   DATABASE: "PostgreSQL"
   AUTHENTICATION: "NextAuth.js"
@@ -181,6 +184,7 @@ PAGES:
         - VersionControl
         - BatchProcessing
         - AnnotationTools
+        - RedactionTools
     
     "/calendar":
       component: "CalendarView"
@@ -386,6 +390,10 @@ PAGES:
               - TemplateLibrary
               - SmartFormFilling
               - VersionControl
+              - OCRProcessing
+              - BatchProcessing
+              - AnnotationTools
+              - RedactionTools
             viewing:
               - DocumentPreview
               - AnnotationTools
@@ -492,6 +500,25 @@ PAGES:
               - ProcedureGuides
               - FAQs
               - BestPractices
+      
+        GLOBAL_NAVIGATION:
+          TOP_BAR:
+            - Logo
+            - GlobalSearch
+            - NotificationBell
+            - UserProfile
+            - HelpSupport
+            - QuickActions
+          
+          SIDE_NAV:
+            - Dashboard
+            - Cases
+            - Documents
+            - Calendar
+            - LearningCenter
+            - Resources
+            - Analytics
+            - Settings
 
 CORE_FEATURES:
   DOCUMENT_MANAGEMENT:
@@ -500,6 +527,8 @@ CORE_FEATURES:
     - VersionControl
     - OCRProcessing
     - BatchProcessing
+    - AnnotationTools
+    - RedactionTools
   
   CASE_MANAGEMENT:
     - TimelineTracking
@@ -586,3 +615,82 @@ PERFORMANCE_TARGETS:
   apiResponse: "< 200ms"
   documentProcess: "< 5s"
   searchResults: "< 500ms"
+
+TAGS:
+  EMAILS:
+    suggested:
+      - Key Evidence
+      - Important
+      - Urgent
+      - Response Needed
+      - Meeting
+      - Agreement
+      - Contract
+      - Negotiation
+      - Timeline
+      - Damages
+      - Admissions
+      - Discrepancy
+      - Witness
+      - Financial
+      - Settlement
+      - Discovery
+  TEXT_MESSAGES:
+    suggested:
+      - Key Evidence
+      - Important
+      - Urgent
+      - Threat
+      - Agreement
+      - Timeline
+      - Location
+      - Intent
+      - Admission
+      - Discrepancy
+      - Witness
+      - Financial
+      - Harassment
+      - Communication
+  AUDIO_TRANSCRIPTS:
+    suggested:
+      - Key Evidence
+      - Important
+      - Urgent
+      - Admission
+      - Timeline
+      - Witness
+      - Agreement
+      - Negotiation
+      - Discrepancy
+      - Financial
+      - Settlement
+      - Planning
+      - Meeting
+  LEGAL_FILINGS:
+    suggested:
+      - Motion
+      - Complaint
+      - Answer
+      - Order
+      - Exhibit
+      - Affidavit
+      - Discovery
+      - Jurisdiction
+      - Deadline
+      - Evidence
+      - Pleadings
+      - Response
+      - Memorandum
+  INVOICES:
+    suggested:
+      - Proof of Payment
+      - Expenses
+      - Damages
+      - Financial
+      - Vendor
+      - Contract
+      - Fees
+      - Reimbursement
+      - Travel
+      - Medical
+      - Consulting
