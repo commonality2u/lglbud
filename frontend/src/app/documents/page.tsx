@@ -521,10 +521,16 @@ export default function DocumentsPage(): ReactElement {
         return <LegalFilingSetDetailView {...props} />;
       case 'text_message':
         return <TextMessageSetDetailView {...props} />;
+      case 'court_document':
+        return <LegalFilingSetDetailView {...props} />;
       default:
         return null;
     }
   };
+
+  const handleRemoveExtractedText = useCallback((index: number) => {
+    setSelectedText('');
+  }, []);
 
   const renderEmptyState = () => {
     const type = activeTab as DocumentType;
@@ -645,7 +651,10 @@ export default function DocumentsPage(): ReactElement {
 
             {/* Extraction Panel */}
             <div className="w-80">
-              <ExtractionPanel />
+              <ExtractionPanel
+                extractedText={selectedText ? [selectedText] : []}
+                onRemove={handleRemoveExtractedText}
+              />
             </div>
           </div>
         </>
