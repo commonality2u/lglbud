@@ -147,32 +147,46 @@ export function BatchUploadModal({
     }
   };
 
-  const handleUpload = async () => {
-    if (files.length === 0) {
-      setError('Please select files to upload');
-      return;
-    }
-
+  const handleUpload = async (files: File[]): Promise<void> => {
     setUploading(true);
     setError(null);
-
+    
     try {
-      const uploadPromises = files.map(async (file) => {
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const formData = new FormData();
+        formData.append('file', file);
+        
         try {
-          await uploadFile(file);
+          const response = await fetch('/api/upload', {
+            method: 'POST',
+            body: formData
+          });
+          
+          if (!response.ok) {
+            throw new Error(`Upload failed: ${response.statusText}`);
+          }
+          
+          const result = await response.json();
+          console.log('Upload successful:', result);
+          
+          // Update progress
+          const progress = ((i + 1) / files.length) * 100;
+          setUploadProgress(prev => ({
+            ...prev,
+            [file.name]: { 
+              status: 'pending',
+              progress: progress
+            }
+          }));
         } catch (error) {
-          console.error(`Error uploading ${file.name}:`, error);
-          throw error;
+          console.error('Error uploading file:', error);
+          setError(`Failed to upload ${file.name}`);
         }
-      });
-
-      await Promise.all(uploadPromises);
-      onUploadComplete();
-      onClose();
-    } catch (err) {
-      setError('Some files failed to upload. Please try again.');
+      }
     } finally {
       setUploading(false);
+      onClose();
     }
   };
 
@@ -305,7 +319,7 @@ export function BatchUploadModal({
               Cancel
             </Button>
             <Button
-              onClick={handleUpload}
+              onClick={() => handleUpload(files)}
               disabled={uploading || files.length === 0}
             >
               {uploading ? 'Uploading...' : 'Upload'}

@@ -4,24 +4,24 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import { FileText, Upload, BarChart2, X, Mic, Mail, MessageSquare, Scale, FileSignature } from 'lucide-react';
 import type { RealtimePostgresChangesPayload } from '@supabase/supabase-js';
-import type { Database } from "../types/supabase";
-import { supabase } from "../lib/supabase";
-import { useDocumentProcessor } from "../hooks/useDocumentProcessor";
-import type { Document, ProcessedDocument } from "../types/document";
-import { BatchUploadModal } from "../components/BatchUploadModal";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
-import EmailsTab from "../components/documents/EmailsTab";
-import LegalFilingsTab from "../components/documents/LegalFilingsTab";
-import AudioTranscriptsTab from "../components/documents/AudioTranscriptsTab";
-import TextMessagesTab from "../components/documents/TextMessagesTab";
-import InvoicesTab from "../components/documents/InvoicesTab";
-import ExtractionPanel from "../components/documents/ExtractionPanel";
-import DocumentList from "../components/documents/DocumentList";
-import AudioTranscriptSetDetailView from "../components/documents/AudioTranscriptSetDetailView";
-import EmailSetDetailView from "../components/documents/EmailSetDetailView";
-import InvoiceSetDetailView from "../components/documents/InvoiceSetDetailView";
-import LegalFilingSetDetailView from "../components/documents/LegalFilingSetDetailView";
-import TextMessageSetDetailView from "../components/documents/TextMessageSetDetailView";
+import type { Database } from "@/types/supabase";
+import { supabase } from "@/lib/supabase";
+import { useDocumentProcessor } from "@/hooks/useDocumentProcessor";
+import type { Document, ProcessedDocument } from "@/types/document";
+import { BatchUploadModal } from "@/components/BatchUploadModal";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import EmailsTab from "@/components/documents/EmailsTab";
+import LegalFilingsTab from "@/components/documents/LegalFilingsTab";
+import AudioTranscriptsTab from "@/components/documents/AudioTranscriptsTab";
+import TextMessagesTab from "@/components/documents/TextMessagesTab";
+import InvoicesTab from "@/components/documents/InvoicesTab";
+import ExtractionPanel from "@/components/documents/ExtractionPanel";
+import DocumentList from "@/components/documents/DocumentList";
+import AudioTranscriptSetDetailView from "@/components/documents/AudioTranscriptSetDetailView";
+import EmailSetDetailView from "@/components/documents/EmailSetDetailView";
+import InvoiceSetDetailView from "@/components/documents/InvoiceSetDetailView";
+import LegalFilingSetDetailView from "@/components/documents/LegalFilingSetDetailView";
+import TextMessageSetDetailView from "@/components/documents/TextMessageSetDetailView";
 import type { ReactElement } from 'react';
 
 type DocumentRow = Database['public']['Tables']['documents']['Row'];
@@ -50,11 +50,6 @@ type RealtimeUpdatePayload = {
   status: DocumentRow['status'];
   [key: string]: string | number | boolean | null;
 }
-
-type RealtimePayload = RealtimePostgresChangesPayload<{
-  old: Record<string, unknown>;
-  new: RealtimeUpdatePayload;
-}>;
 
 const DOCUMENT_TYPES = {
   audio_transcript: {
@@ -89,7 +84,21 @@ const DOCUMENT_TYPES = {
   }
 } as const;
 
-const DOCUMENT_COLUMNS = {
+interface DocumentColumn {
+  key: keyof DocumentItem | 'actions';
+  label: string;
+}
+
+interface DetailViewProps {
+  id: string;
+  onBack: () => void;
+}
+
+type DocumentColumns = {
+  [K in DocumentType]: DocumentColumn[];
+};
+
+const DOCUMENT_COLUMNS: DocumentColumns = {
   audio_transcript: [
     { key: 'title', label: 'Title' },
     { key: 'modifiedAt', label: 'Date Recorded' },
@@ -130,6 +139,14 @@ const DOCUMENT_COLUMNS = {
     { key: 'status', label: 'Status' },
     { key: 'actions', label: 'Actions' }
   ],
+  invoice: [
+    { key: 'title', label: 'Invoice Title' },
+    { key: 'modifiedAt', label: 'Date' },
+    { key: 'caseNumber', label: 'Case Number' },
+    { key: 'size', label: 'Size' },
+    { key: 'status', label: 'Status' },
+    { key: 'actions', label: 'Actions' }
+  ]
 } as const;
 
 export default function DocumentsPage(): ReactElement {
@@ -151,7 +168,7 @@ export default function DocumentsPage(): ReactElement {
     currentDocument,
     clearProcessedDocument
   } = useDocumentProcessor({
-    onProcessingComplete: (result) => {
+    onProcessingComplete: (result: ProcessedDocument) => {
       console.log('Document processing completed:', result);
     },
     onError: (error: Error) => {
@@ -161,7 +178,7 @@ export default function DocumentsPage(): ReactElement {
   });
 
   // Memoize loadDocuments callback
-  const loadDocuments = useCallback(async (type?: string): Promise<void> => {
+  const loadDocuments = useCallback(async (type?: DocumentType): Promise<void> => {
     try {
       setIsLoading(true);
       setError(null);
@@ -183,7 +200,7 @@ export default function DocumentsPage(): ReactElement {
       }
 
       if (data) {
-        const mappedDocs = data.map((doc: DocumentRow) => ({
+        const mappedDocs: DocumentItem[] = data.map((doc: DocumentRow) => ({
           id: doc.id,
           title: doc.title,
           name: doc.title,
@@ -275,8 +292,9 @@ export default function DocumentsPage(): ReactElement {
           schema: 'public',
           table: 'documents'
         },
-        (payload: RealtimePayload) => {
-          const newData = payload.new;
+        (payload) => {
+          if (!payload.new) return;
+          const newData = payload.new as RealtimeUpdatePayload;
           if (newData?.id && newData?.status) {
             setDocuments(prev =>
               prev.map(doc =>
@@ -480,24 +498,29 @@ export default function DocumentsPage(): ReactElement {
     const files = Array.from(e.dataTransfer.files);
     console.log('Dropped files:', files);
     handleFiles(files);
-  }, []);
+  }, [handleFiles]);
 
-  const renderDetailView = () => {
+  const renderDetailView = (): ReactElement | null => {
     const doc = documents.find(d => d.id === selectedDocumentId);
     if (!doc) return null;
+
+    const props: DetailViewProps = {
+      id: doc.id,
+      onBack: handleBackFromDetail
+    };
 
     const type = doc.type as DocumentType;
     switch (type) {
       case 'audio_transcript':
-        return <AudioTranscriptSetDetailView id={doc.id} onBack={handleBackFromDetail} />;
+        return <AudioTranscriptSetDetailView {...props} />;
       case 'email':
-        return <EmailSetDetailView id={doc.id} onBack={handleBackFromDetail} />;
+        return <EmailSetDetailView {...props} />;
       case 'invoice':
-        return <InvoiceSetDetailView id={doc.id} onBack={handleBackFromDetail} />;
+        return <InvoiceSetDetailView {...props} />;
       case 'legal_filing':
-        return <LegalFilingSetDetailView id={doc.id} onBack={handleBackFromDetail} />;
+        return <LegalFilingSetDetailView {...props} />;
       case 'text_message':
-        return <TextMessageSetDetailView id={doc.id} onBack={handleBackFromDetail} />;
+        return <TextMessageSetDetailView {...props} />;
       default:
         return null;
     }
