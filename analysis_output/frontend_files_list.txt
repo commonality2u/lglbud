@@ -1,0 +1,276 @@
+Frontend Files Contents:
+Root Directory: /frontend
+
+1. File: next-env.d.ts
+Directory Path: D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\next-env.d.ts
+================================================================================
+
+/// <reference types="next" />
+/// <reference types="next/image-types/global" />
+
+// NOTE: This file should not be edited
+// see https://nextjs.org/docs/basic-features/typescript for more information.
+
+
+================================================================================
+
+2. File: tsconfig.json
+Directory Path: D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\tsconfig.json
+================================================================================
+
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "src/**/*.ts", "src/**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}
+
+
+================================================================================
+
+3. File: next.config.mjs
+Directory Path: D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\next.config.mjs
+================================================================================
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  distDir: '.next',
+  basePath: '',
+}
+
+export default nextConfig
+
+
+================================================================================
+
+4. File: postcss.config.mjs
+Directory Path: D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\postcss.config.mjs
+================================================================================
+
+/** @type {import('postcss-load-config').Config} */
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}
+
+
+================================================================================
+
+5. File: .eslintrc.json
+Directory Path: D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\.eslintrc.json
+================================================================================
+
+{
+  "extends": ["next/core-web-vitals", "next/typescript"]
+}
+
+
+================================================================================
+
+6. File: Dockerfile
+Directory Path: D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\Dockerfile
+================================================================================
+
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+EXPOSE 3000
+
+CMD ["npm", "start"] 
+
+================================================================================
+
+7. File: package.json
+Directory Path: D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\package.json
+================================================================================
+
+{
+  "name": "legal-buddy-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000",
+    "lint": "next lint",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@headlessui/react": "^1.7.17",
+    "@heroicons/react": "^2.0.18",
+    "@prisma/client": "^5.7.1",
+    "@radix-ui/react-dialog": "^1.1.4",
+    "@radix-ui/react-icons": "^1.3.0",
+    "@radix-ui/react-progress": "^1.0.3",
+    "@radix-ui/react-slider": "^1.1.2",
+    "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-tabs": "^1.0.4",
+    "@supabase/auth-helpers-nextjs": "^0.8.7",
+    "@supabase/supabase-js": "^2.39.1",
+    "@types/next-auth": "^3.15.0",
+    "bcryptjs": "^2.4.3",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "date-fns": "^2.30.0",
+    "dotenv": "^16.3.1",
+    "langchain": "^0.1.37",
+    "lucide-react": "^0.468.0",
+    "next": "^14.0.0",
+    "next-auth": "^4.24.11",
+    "next-themes": "^0.4.4",
+    "pdf-parse": "^1.1.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tailwind-merge": "^2.0.0"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.1.5",
+    "@testing-library/react": "^14.1.2",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^20.17.10",
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
+    "@typescript-eslint/eslint-plugin": "^6.14.0",
+    "@typescript-eslint/parser": "^6.14.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^8.55.0",
+    "eslint-config-next": "14.0.4",
+    "jsdom": "^23.0.1",
+    "postcss": "^8.4.32",
+    "supabase": "^1.115.4",
+    "tailwindcss": "^3.3.6",
+    "typescript": "^5.3.3",
+    "vite-tsconfig-paths": "^4.2.2",
+    "vitest": "^1.0.4"
+  }
+}
+
+
+================================================================================
+
+8. File: tailwind.config.ts
+Directory Path: D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\tailwind.config.ts
+================================================================================
+
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  content: [
+    "./frontend/src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./frontend/src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./frontend/src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./frontend/src/lib/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+    },
+  },
+  plugins: [],
+};
+
+export default config;
+
+
+================================================================================
+
+9. File: vitest.config.ts
+Directory Path: D:\Documents\Github\CourtCopy_Saas\legal-buddy\frontend\vitest.config.ts
+================================================================================
+
+/// <reference types="vitest" />
+import { defineConfig } from 'vitest/config';
+import react from '@vitejs/plugin-react';
+import tsconfigPaths from 'vite-tsconfig-paths';
+
+export default defineConfig({
+  plugins: [react(), tsconfigPaths()],
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: ['./src/test/setup.ts'],
+    include: ['src/**/*.{test,spec}.{js,jsx,ts,tsx}'],
+    coverage: {
+      reporter: ['text', 'json', 'html'],
+      exclude: [
+        'node_modules/',
+        'src/test/',
+      ],
+    },
+  },
+}); 
+
+================================================================================
+

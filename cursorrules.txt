@@ -1,0 +1,782 @@
+# LegalBuddy UI - Project Rules and Structure
+# Version: 1.0
+# Purpose: Legal SaaS platform for attorneys, paralegals, and pro se litigants
+
+PROJECT_STRUCTURE:
+  ROOT: "legal-buddy"
+   
+
+Legal Buddy Web App
+└── 📁 legal-buddy
+    ├── 📁 .git
+    ├── 📁 .github
+    ├── 📁 .vscode # Contains the file extensions.json.
+    ├── 📁 analysis_output # Contains the analysis output files.
+    │   └── 📄 codebase_analysis.log
+    ├── 📁 backend
+    │   ├── 📁 api
+    │   │   └── 📄 main.py
+    │   ├── 📁 app # Next.js App Router directory containing pages and API routes.
+    │   │   ├── 📁 __pycache__
+    │   │   ├── 📁 api
+    │   │   │   └── 📁 upload
+    │   │   │       ├── 📁 __pycache__
+    │   │   │       └── 📄 route.py
+    │   │   ├── 📁 core
+    │   │   ├── 📁 models
+    │   │   ├── 📁 services
+    │   │   ├── 📄 config.py
+    │   │   └── 📄 main.py
+    │   ├── 📁 pdf_processor
+    │   │   ├── 📁 __pycache__
+    │   │   ├── 📄 __init__.py
+    │   │   ├── 📄 annotate_data.py
+    │   │   ├── 📄 models.py
+    │   │   ├── 📄 process_pdfs.py
+    │   │   ├── 📄 process_scheduling_orders.py
+    │   │   ├── 📄 processor.py
+    │   │   ├── 📄 supabase_handler.py
+    │   │   └── 📄 train_spacy.py
+    │   ├── 📁 supabase
+    │   │   ├── 📁 .temp
+    │   │   │   └── 📄 cli-latest
+    │   │   ├── 📁 migrations
+    │   │   ├── 📄 .gitignore # File containing rules for ignoring specific files and directories in the project repository.
+    │   │   └── 📄 config.toml
+    │   ├── 📁 tests
+    │   ├── 📄 .env # Contains the ANTHROPIC_API_KEY necessary for authenticating with the specific API.
+    │   ├── 📄 Dockerfile
+    │   ├── 📄 pytest.ini
+    │   ├── 📄 requirements.txt
+    │   ├── 📄 run_processor.py
+    │   ├── 📄 test_db.py
+    │   └── 📄 test_upload.py
+    ├── 📁 frontend
+    │   ├── 📁 prisma
+    │   │   └── 📄 schema.prisma
+    │   ├── 📁 public # Static assets directory containing SVG files and other public resources.
+    │   │   ├── 📄 file.svg
+    │   │   ├── 📄 globe.svg
+    │   │   ├── 📄 next.svg
+    │   │   ├── 📄 vercel.svg
+    │   │   └── 📄 window.svg
+    │   ├── 📁 scripts
+    │   │   └── 📄 setup-storage.ts
+    │   ├── 📁 src # Source code directory containing all application code.
+    │   │   ├── 📁 __tests__
+    │   │   │   └── 📄 BatchUploadModal.test.tsx
+    │   │   ├── 📁 app # Next.js App Router directory containing pages and API routes.
+    │   │   │   ├── 📁 (auth)
+    │   │   │   │   ├── 📁 login
+    │   │   │   │   │   └── 📄 page.tsx
+    │   │   │   │   ├── 📁 signup
+    │   │   │   │   │   └── 📄 page.tsx
+    │   │   │   │   └── 📄 layout.tsx
+    │   │   │   ├── 📁 (dashboard)
+    │   │   │   ├── 📁 (landing)
+    │   │   │   │   ├── 📁 about
+    │   │   │   │   │   └── 📄 page.tsx
+    │   │   │   │   ├── 📁 contact
+    │   │   │   │   │   └── 📄 page.tsx
+    │   │   │   │   ├── 📁 features
+    │   │   │   │   │   └── 📄 page.tsx
+    │   │   │   │   ├── 📁 pricing
+    │   │   │   │   │   └── 📄 page.tsx
+    │   │   │   │   ├── 📄 layout.tsx
+    │   │   │   │   └── 📄 page.tsx
+    │   │   │   ├── 📁 admin
+    │   │   │   │   └── 📁 activity
+    │   │   │   │       ├── 📄 ActivityTable.tsx
+    │   │   │   │       └── 📄 page.tsx
+    │   │   │   ├── 📁 api
+    │   │   │   │   └── 📁 auth
+    │   │   │   │       ├── 📁 [...nextauth]
+    │   │   │   │       │   └── 📄 route.ts
+    │   │   │   │       ├── 📁 signup
+    │   │   │   │       │   └── 📄 route.ts
+    │   │   │   │       └── 📁 test
+    │   │   │   │           └── 📄 route.ts
+    │   │   │   ├── 📁 calendar
+    │   │   │   │   └── 📄 page.tsx
+    │   │   │   ├── 📁 cases
+    │   │   │   │   └── 📄 page.tsx
+    │   │   │   ├── 📁 context
+    │   │   │   │   └── 📄 AppContext.tsx
+    │   │   │   ├── 📁 dashboard
+    │   │   │   │   └── 📄 page.tsx
+    │   │   │   ├── 📁 documents
+    │   │   │   │   ├── 📁 analysis
+    │   │   │   │   │   └── 📄 page.tsx
+    │   │   │   │   └── 📄 page.tsx
+    │   │   │   ├── 📁 financial
+    │   │   │   │   └── 📄 page.tsx
+    │   │   │   ├── 📁 fonts
+    │   │   │   │   ├── 📄 GeistMonoVF.woff
+    │   │   │   │   └── 📄 GeistVF.woff
+    │   │   │   ├── 📁 learning
+    │   │   │   │   └── 📄 page.tsx
+    │   │   │   ├── 📁 network
+    │   │   │   │   └── 📄 page.tsx
+    │   │   │   ├── 📁 resources
+    │   │   │   │   └── 📄 page.tsx
+    │   │   │   ├── 📄 favicon.ico
+    │   │   │   ├── 📄 globals.css
+    │   │   │   └── 📄 layout.tsx
+    │   │   ├── 📁 components # Reusable React components directory.
+    │   │   │   ├── 📁 cases
+    │   │   │   ├── 📁 documents
+    │   │   │   │   ├── 📄 AudioTranscriptSetDetailView.tsx
+    │   │   │   │   ├── 📄 AudioTranscriptsTab.tsx
+    │   │   │   │   ├── 📄 DocumentList.tsx
+    │   │   │   │   ├── 📄 EmailSetDetailView.tsx
+    │   │   │   │   ├── 📄 EmailsTab.tsx
+    │   │   │   │   ├── 📄 ExtractionPanel.tsx
+    │   │   │   │   ├── 📄 InvoiceSetDetailView.tsx
+    │   │   │   │   ├── 📄 InvoicesTab.tsx
+    │   │   │   │   ├── 📄 LegalFilingSetDetailView.tsx
+    │   │   │   │   ├── 📄 LegalFilingsTab.tsx
+    │   │   │   │   ├── 📄 TextMessageSetDetailView.tsx
+    │   │   │   │   └── 📄 TextMessagesTab.tsx
+    │   │   │   ├── 📁 landing
+    │   │   │   │   ├── 📄 Footer.tsx
+    │   │   │   │   └── 📄 Header.tsx
+    │   │   │   ├── 📁 layout
+    │   │   │   │   └── 📄 ClientLayout.tsx
+    │   │   │   ├── 📁 navigation
+    │   │   │   │   ├── 📄 SideNav.tsx
+    │   │   │   │   └── 📄 TopNavBar.tsx
+    │   │   │   ├── 📁 providers
+    │   │   │   │   ├── 📄 SessionProvider.tsx
+    │   │   │   │   └── 📄 ThemeProvider.tsx
+    │   │   │   ├── 📁 ui
+    │   │   │   │   ├── 📄 badge.tsx
+    │   │   │   │   ├── 📄 button.tsx
+    │   │   │   │   ├── 📄 card.tsx
+    │   │   │   │   ├── 📄 dialog.tsx
+    │   │   │   │   ├── 📄 input.tsx
+    │   │   │   │   ├── 📄 progress.tsx
+    │   │   │   │   ├── 📄 slider.tsx
+    │   │   │   │   ├── 📄 table.tsx
+    │   │   │   │   └── 📄 tabs.tsx
+    │   │   │   ├── 📄 BatchUploadModal.tsx
+    │   │   │   ├── 📄 DocumentAnalysis.tsx
+    │   │   │   ├── 📄 DocumentTimeline.tsx
+    │   │   │   └── 📄 ThemeToggle.tsx
+    │   │   ├── 📁 hooks
+    │   │   │   └── 📄 useDocumentProcessor.ts
+    │   │   ├── 📁 lib
+    │   │   │   ├── 📁 auth
+    │   │   │   │   ├── 📄 config.ts
+    │   │   │   │   └── 📄 tracking.ts
+    │   │   │   ├── 📄 documentProcessing.ts
+    │   │   │   ├── 📄 documents.ts
+    │   │   │   ├── 📄 prisma.ts
+    │   │   │   ├── 📄 supabase.ts
+    │   │   │   └── 📄 utils.ts
+    │   │   ├── 📁 test
+    │   │   │   └── 📄 setup.ts
+    │   │   ├── 📁 types
+    │   │   │   ├── 📄 document.ts
+    │   │   │   └── 📄 supabase.ts
+    │   │   └── 📄 middleware.ts
+    │   ├── 📄 .env # Contains the ANTHROPIC_API_KEY necessary for authenticating with the specific API.
+    │   ├── 📄 .eslintrc.json
+    │   ├── 📄 Dockerfile
+    │   ├── 📄 next-env.d.ts # Type definitions for Next.js, including references to necessary global image types.
+    │   ├── 📄 next.config.mjs
+    │   ├── 📄 package-lock.json
+    │   ├── 📄 package.json # Defines project details, including scripts, dependencies, and devDependencies.
+    │   ├── 📄 postcss.config.mjs # Configuration file for PostCSS, defining plugins including Tailwind CSS.
+    │   ├── 📄 tailwind.config.ts
+    │   ├── 📄 tsconfig.json
+    │   └── 📄 vitest.config.ts
+    ├── 📁 supabase
+    │   ├── 📁 .temp
+    │   │   └── 📄 cli-latest
+    │   ├── 📁 migrations
+    │   ├── 📄 .gitignore # File containing rules for ignoring specific files and directories in the project repository.
+    │   └── 📄 config.toml
+    ├── 📁 test
+    │   └── 📁 scheduling-orders
+    │       ├── 📄 Updated Scheduling order Ballys.pdf
+    │       └── 📄 gov.uscourts.txed.227625.27.0.pdf
+    ├── 📁 tools
+    ├── 📁 venv
+    ├── 📄 .cursorignore
+    ├── 📄 .cursorrules # Summary: Contains the UI/UX plan, app structure, file descriptions, and API routes.
+    ├── 📄 .env # Contains the ANTHROPIC_API_KEY necessary for authenticating with the specific API.
+    ├── 📄 .gitignore # File containing rules for ignoring specific files and directories in the project repository.
+    ├── 📄 README.md # README.md: Contains information about a Next.js project, including setup instructions.
+    ├── 📄 ROADMAP.md
+    ├── 📄 codebase_analysis.py # This file performs code analysis, including checking for validation issues and analyzing imports.
+    ├── 📄 docker-compose.yml
+    └── 📄 generate_todo.py
+
+Legend:
+📁 Directory
+```
+
+
+
+
+APP_ARCHITECTURE:
+  FRAMEWORK: "Next.js"
+  STATE_MANAGEMENT: "React Context"
+  UI_FRAMEWORK: "TailwindCSS"
+  DATABASE: "PostgreSQL"
+  AUTHENTICATION: "NextAuth.js"
+
+PAGES:
+  LAYOUT:
+    GLOBAL:
+      - TopNavBar
+      - SideNavigation
+      - Footer
+    
+  ROUTES:
+    "/":
+      component: "Dashboard"
+      features:
+        - AIDocumentInsights
+        - CaseOverview
+        - DeadlineWidget
+        - DocumentPreview
+        - ActivityFeed
+        - ROICalculator
+        - ResourceUtilization
+    
+    "/cases":
+      component: "CaseManagement"
+      features:
+        - AdvancedCaseFiltering
+        - BatchDocumentProcessing
+        - MultiPartyAssociation
+        - CaseProgressTracking
+        - DocumentVersionControl
+        - CaseTimelineVisualization
+        - EntityExtraction
+        - PatternRecognition
+    
+    "/documents":
+      component: "DocumentCenter"
+      features:
+        - DocumentChunking
+        - EntityKeywordExtraction
+        - TimelineConstruction
+        - CrossReferenceSystem
+        - DocumentUpload
+        - TemplateLibrary
+        - SmartFormFilling
+        - VersionControl
+        - BatchProcessing
+        - AnnotationTools
+        - RedactionTools
+    
+    "/calendar":
+      component: "CalendarView"
+      features:
+        - DeadlineTracker
+        - CourtDates
+        - TaskManagement
+        - ReminderSystem
+        - CalendarSynchronization
+        - ConflictDetection
+        - MobileNotifications
+        - LocationBasedAlerts
+    
+    "/learning":
+      component: "LearningCenter"
+      features:
+        - InteractiveLegalProcessTutorials
+        - LegalTerminologyDatabase
+        - VideoLearningModules
+        - StepByStepWorkflowGuides
+        - PracticeAreaResources
+        - DocumentAssemblyTutorials
+        - InteractiveLessons
+        - ProgressTracking
+    
+    "/analytics":
+      component: "AnalyticsDashboard"
+      features:
+        - CaseMetrics
+        - DocumentStats
+        - TimeTracking
+        - ProgressReports
+        - DeadlineCompliance
+        - ResourceUtilization
+        - ROICalculator
+        - PerformanceMetrics
+    
+    "/security":
+      component: "SecurityCenter"
+      features:
+        - EnhancedAuditLogging
+        - RoleBasedAccessControl
+        - DocumentEncryption
+        - TwoFactorAuthentication
+        - ComplianceReporting
+        - DataRetentionPolicies
+        - SecurityMetrics
+    
+    "/integrations":
+      component: "IntegrationHub"
+      features:
+        - CourtFilingIntegration
+        - LegalResearchPlatforms
+        - ESignatureServices
+        - PaymentProcessing
+        - CalendarSynchronization
+        - DocumentManagementAPIs
+        - APIKeyManagement
+
+        GLOBAL_NAVIGATION:
+        TOP_BAR:
+          - Logo
+          - GlobalSearch
+          - NotificationBell
+          - UserProfile
+          - HelpSupport
+          - QuickActions
+      
+        SIDE_NAV:
+          - Dashboard
+          - Cases
+          - Documents
+          - Calendar
+          - LearningCenter
+          - Resources
+          - Analytics
+          - Settings
+      
+      PAGES:
+        DASHBOARD:
+          path: "/"
+          layout:
+            header:
+              - GlobalSearch:
+                  destination: "/search"
+                  features: ["GlobalSearch", "FilterByType", "RecentSearches"]
+              - CaseSelector:
+                  destination: "/cases"
+                  features: ["ActiveCases", "RecentCases", "FavoriteCases"]
+              - NotificationCenter:
+                  destination: "/notifications"
+                  features: ["Alerts", "Updates", "Actions"]
+            
+            quick_stats:
+              - ActiveCasesCounter:
+                  destination: "/cases"
+                  features: ["CaseCount", "CaseStatus", "CaseProgress"]
+              - UpcomingDeadlines:
+                  destination: "/calendar"
+                  features: ["DeadlineCount", "UrgentDeadlines", "DeadlineTypes"]
+              - PendingDocuments:
+                  destination: "/documents"
+                  features: ["DocumentCount", "UrgentDocuments", "DocumentTypes"]
+              - TaskCompletion:
+                  destination: "/tasks"
+                  features: ["CompletionRate", "PendingTasks", "TaskPriorities"]
+            
+            main_content:
+              left_panel:
+                - CaseProgressTracker:
+                    destination: "/cases/progress"
+                    features: ["Milestones", "Timeline", "NextActions"]
+                - AIInsights:
+                    destination: "/insights"
+                    features: ["DocumentAnalysis", "RiskAssessment", "Recommendations"]
+                - RecentDocuments:
+                    destination: "/documents/recent"
+                    features: ["QuickView", "Download", "Share"]
+              
+              right_panel:
+                - DeadlineCalendar:
+                    destination: "/calendar"
+                    features: ["MonthView", "Reminders", "AddDeadline"]
+                - ResourceUtilization:
+                    destination: "/analytics/resources"
+                    features: ["TimeTracking", "CostAnalysis", "Efficiency"]
+                - ROICalculator:
+                    destination: "/analytics/roi"
+                    features: ["CostSavings", "TimeEfficiency", "ValueMetrics"]
+            
+            quick_actions:
+              - NewCase:
+                  destination: "/cases/new"
+                  features: ["CaseTemplate", "PartyInput", "DocumentUpload"]
+              - UploadDocument:
+                  destination: "/documents/upload"
+                  features: ["DragDrop", "BatchUpload", "Scanner"]
+              - ScheduleEvent:
+                  destination: "/calendar/new"
+                  features: ["EventType", "Participants", "Reminders"]
+              - StartWorkflow:
+                  destination: "/workflows/new"
+                  features: ["Templates", "CustomFlow", "Automation"]
+            
+            activity_feed:
+              - RecentActivities:
+                  destination: "/activities"
+                  features: ["FilterByType", "UserActions", "SystemUpdates"]
+              - DocumentUpdates:
+                  destination: "/documents/updates"
+                  features: ["VersionHistory", "Changes", "Contributors"]
+              - TeamActivity:
+                  destination: "/team/activity"
+                  features: ["UserActions", "Collaboration", "Messages"]
+            
+            right_sidebar:
+              - PrioritizedTasks:
+                  destination: "/tasks"
+                  features: ["TaskList", "Priorities", "DueDates"]
+              - Next7DaysDeadlines:
+                  destination: "/calendar/week"
+                  features: ["WeekView", "Reminders", "QuickAdd"]
+              - FrequentlyUsedTools:
+                  destination: "/tools"
+                  features: ["QuickAccess", "Favorites", "Customize"]
+      
+        CASE_MANAGEMENT:
+          path: "/cases"
+          sections:
+            case_list:
+              - FilterableTable
+              - SearchFunction
+              - BatchActions
+              - StatusIndicators
+            case_detail:
+              header:
+                - CaseTitle
+                - CaseNumber
+                - Status
+                - Priority
+                - AssignedTo
+              tabs:
+                - Overview
+                - Documents
+                - Timeline
+                - Parties
+                - Evidence
+                - Notes
+                - Communications
+              actions:
+                - EditCase
+                - AddDocument
+                - ScheduleEvent
+                - ShareCase
+                - GenerateReport
+      
+        DOCUMENT_CENTER:
+          path: "/documents"
+          features:
+            document_management:
+              - UploadZone
+              - BatchProcessor
+              - TemplateLibrary
+              - SmartFormFilling
+              - VersionControl
+              - OCRProcessing
+              - BatchProcessing
+              - AnnotationTools
+              - RedactionTools
+            viewing:
+              - DocumentPreview
+              - AnnotationTools
+              - RedactionTools
+              - SignatureCapture
+            organization:
+              - FolderStructure
+              - TagSystem
+              - SearchFilters
+              - BulkActions
+      
+        CALENDAR:
+          path: "/calendar"
+          components:
+            main_calendar:
+              - MonthView
+              - WeekView
+              - DayView
+              - AgendaView
+            features:
+              - DeadlineTracker
+              - CourtDateManager
+              - TaskScheduler
+              - ReminderSystem
+            integrations:
+              - GoogleCalendar
+              - Outlook
+              - iCal
+            tools:
+              - DeadlineCalculator
+              - ConflictChecker
+              - RecurrenceSetup
+      
+        LEARNING_CENTER:
+          path: "/learning"
+          sections:
+            courses:
+              - LegalProcedures
+              - DocumentPreparation
+              - CourtEtiquette
+              - LegalResearch
+            resources:
+              - VideoTutorials
+              - PracticeGuides
+              - FormInstructions
+              - LegalGlossary
+            interactive:
+              - QuizModules
+              - PracticeExercises
+              - SimulatedForms
+              - ProgressTracking
+      
+        ANALYTICS:
+          path: "/analytics"
+          dashboards:
+            case_metrics:
+              - CaseLoadAnalysis
+              - SuccessRates
+              - TimelineMetrics
+              - CostTracking
+            document_analytics:
+              - ProcessingStats
+              - CompletionRates
+              - ErrorAnalysis
+              - UsagePatterns
+            performance_tracking:
+              - DeadlineCompliance
+              - ResponseTimes
+              - UserActivity
+              - SystemUtilization
+      
+        SETTINGS:
+          path: "/settings"
+          categories:
+            profile:
+              - PersonalInfo
+              - Preferences
+              - Notifications
+            security:
+              - Authentication
+              - Permissions
+              - DataPrivacy
+            integrations:
+              - APIConnections
+              - CalendarSync
+              - StorageLinks
+            billing:
+              - Subscription
+              - PaymentMethods
+              - InvoiceHistory
+      
+        RESOURCES:
+          path: "/resources"
+          sections:
+            legal_directory:
+              - CourtDirectory
+              - LegalAidResources
+              - ExpertNetwork
+            forms_library:
+              - CourtForms
+              - LegalTemplates
+              - CustomForms
+            knowledge_base:
+              - ProcedureGuides
+              - FAQs
+              - BestPractices
+      
+        GLOBAL_NAVIGATION:
+          TOP_BAR:
+            - Logo
+            - GlobalSearch
+            - NotificationBell
+            - UserProfile
+            - HelpSupport
+            - QuickActions
+          
+          SIDE_NAV:
+            - Dashboard
+            - Cases
+            - Documents
+            - Calendar
+            - LearningCenter
+            - Resources
+            - Analytics
+            - Settings
+
+CORE_FEATURES:
+  DOCUMENT_MANAGEMENT:
+    - SmartFormFilling
+    - TemplateLibrary
+    - VersionControl
+    - OCRProcessing
+    - BatchProcessing
+    - AnnotationTools
+    - RedactionTools
+  
+  CASE_MANAGEMENT:
+    - TimelineTracking
+    - PartyManagement
+    - EvidenceTracking
+    - DeadlineCalculator
+    - AutomatedReminders
+  
+  AI_FEATURES:
+    - DocumentAnalysis
+    - CitationChecking
+    - RiskAssessment
+    - PrecedentSearch
+    - AutomatedDrafting
+
+INTEGRATIONS:
+  REQUIRED:
+    - CourtFilingAPIs
+    - CalendarSystems
+    - DocumentStorage
+    - PaymentProcessing
+    - EmailService
+
+DATA_MODELS:
+  Case:
+    - caseNumber
+    - parties
+    - documents
+    - deadlines
+    - status
+  
+  Document:
+    - title
+    - type
+    - version
+    - metadata
+    - permissions
+  
+  User:
+    - profile
+    - preferences
+    - permissions
+    - subscription
+
+UI_COMPONENTS:
+  SHARED:
+    - Button
+    - Input
+    - Modal
+    - Table
+    - Card
+    - Alert
+    - Dropdown
+  
+  SPECIALIZED:
+    - DocumentViewer
+    - TimelinePlot
+    - CalendarWidget
+    - DeadlineCalculator
+    - FormBuilder
+
+STYLE_GUIDE:
+  COLORS:
+    primary: "#2563eb"
+    secondary: "#475569"
+    accent: "#0891b2"
+    error: "#dc2626"
+    success: "#16a34a"
+  
+  TYPOGRAPHY:
+    headings: "Inter"
+    body: "Inter"
+    monospace: "JetBrains Mono"
+
+SECURITY_REQUIREMENTS:
+  - EndToEndEncryption
+  - TwoFactorAuth
+  - RoleBasedAccess
+  - AuditLogging
+  - DataBackup
+
+PERFORMANCE_TARGETS:
+  pageLoad: "< 2s"
+  apiResponse: "< 200ms"
+  documentProcess: "< 5s"
+  searchResults: "< 500ms"
+
+TAGS:
+  EMAILS:
+    suggested:
+      - Key Evidence
+      - Important
+      - Urgent
+      - Response Needed
+      - Meeting
+      - Agreement
+      - Contract
+      - Negotiation
+      - Timeline
+      - Damages
+      - Admissions
+      - Discrepancy
+      - Witness
+      - Financial
+      - Settlement
+      - Discovery
+  TEXT_MESSAGES:
+    suggested:
+      - Key Evidence
+      - Important
+      - Urgent
+      - Threat
+      - Agreement
+      - Timeline
+      - Location
+      - Intent
+      - Admission
+      - Discrepancy
+      - Witness
+      - Financial
+      - Harassment
+      - Communication
+  AUDIO_TRANSCRIPTS:
+    suggested:
+      - Key Evidence
+      - Important
+      - Urgent
+      - Admission
+      - Timeline
+      - Witness
+      - Agreement
+      - Negotiation
+      - Discrepancy
+      - Financial
+      - Settlement
+      - Planning
+      - Meeting
+  LEGAL_FILINGS:
+    suggested:
+      - Motion
+      - Complaint
+      - Answer
+      - Order
+      - Exhibit
+      - Affidavit
+      - Discovery
+      - Jurisdiction
+      - Deadline
+      - Evidence
+      - Pleadings
+      - Response
+      - Memorandum
+  INVOICES:
+    suggested:
+      - Proof of Payment
+      - Expenses
+      - Damages
+      - Financial
+      - Vendor
+      - Contract
+      - Fees
+      - Reimbursement
+      - Travel
+      - Medical
+      - Consulting
